@@ -40,7 +40,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Cego\\ServiceHealthChecking\\ServiceHealthServiceProvider"
+        "Cego\\ServiceHealthChecking\\ServiceHealthCheckingServiceProvider"
       ]
     }
   }

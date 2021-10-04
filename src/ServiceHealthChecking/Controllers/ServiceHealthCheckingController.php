@@ -4,7 +4,7 @@ namespace Cego\ServiceHealthChecking\Controllers;
 
 use Cego\ServiceHealthChecking\Interfaces\HealthCheck;
 
-class ServiceHealthController extends Controller
+class ServiceHealthCheckingController extends Controller
 {
     /**
      * Endpoint for checking the health of a service

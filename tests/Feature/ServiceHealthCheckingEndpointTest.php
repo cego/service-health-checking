@@ -6,7 +6,7 @@ use Mockery\MockInterface;
 use Cego\ServiceHealthChecking\Tests\TestCase;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheck;
 
-class ServiceHealthEndpointTest extends TestCase
+class ServiceHealthCheckingEndpointTest extends TestCase
 {
     /** @test */
     public function it_returns_200_on_success()
@@ -20,7 +20,7 @@ class ServiceHealthEndpointTest extends TestCase
         });
 
         // Act
-        $response = $this->getJson(route('vendor.service-health.index'));
+        $response = $this->getJson(route('vendor.service-health-checking.index'));
 
         // Assert
         $response->assertStatus(200);
@@ -39,7 +39,7 @@ class ServiceHealthEndpointTest extends TestCase
         });
 
         // Act
-        $response = $this->getJson(route('vendor.service-health.index'));
+        $response = $this->getJson(route('vendor.service-health-checking.index'));
 
         // Assert
         $response->assertStatus(500);

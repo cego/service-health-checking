@@ -4,7 +4,7 @@ namespace Cego\ServiceHealthChecking;
 
 use Illuminate\Support\ServiceProvider;
 
-class ServiceHealthServiceProvider extends ServiceProvider
+class ServiceHealthCheckingServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any package services.

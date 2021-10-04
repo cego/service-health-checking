@@ -5,18 +5,18 @@ namespace Cego\ServiceHealthChecking\Tests\Unit;
 use Mockery\MockInterface;
 use Cego\ServiceHealthChecking\Tests\TestCase;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheck;
-use Cego\ServiceHealthChecking\Controllers\ServiceHealthController;
+use Cego\ServiceHealthChecking\Controllers\ServiceHealthCheckingController;
 
-class ServiceHealthControllerTest extends TestCase
+class ServiceHealthCheckingControllerTest extends TestCase
 {
     /** @test */
     public function performChecks_returns_empty_array_if_no_checks_are_defined()
     {
         // Arrange
-        $method = $this->getPrivateMethod(ServiceHealthController::class, 'performChecks');
+        $method = $this->getPrivateMethod(ServiceHealthCheckingController::class, 'performChecks');
 
         // Act
-        $errors = $method->invokeArgs(resolve(ServiceHealthController::class), [[]]);
+        $errors = $method->invokeArgs(resolve(ServiceHealthCheckingController::class), [[]]);
 
         // Assert
         $this->assertEquals([], $errors);
@@ -26,7 +26,7 @@ class ServiceHealthControllerTest extends TestCase
     public function performChecks_returns_empty_array_if_checks_passes()
     {
         // Arrange
-        $method = $this->getPrivateMethod(ServiceHealthController::class, 'performChecks');
+        $method = $this->getPrivateMethod(ServiceHealthCheckingController::class, 'performChecks');
         $checks = [
             TestHealthCheck::class
         ];
@@ -37,7 +37,7 @@ class ServiceHealthControllerTest extends TestCase
         });
 
         // Act
-        $errors = $method->invokeArgs(resolve(ServiceHealthController::class), [$checks]);
+        $errors = $method->invokeArgs(resolve(ServiceHealthCheckingController::class), [$checks]);
 
         // Assert
         $this->assertEquals([], $errors);
@@ -47,7 +47,7 @@ class ServiceHealthControllerTest extends TestCase
     public function performChecks_returns_array_with_errors_if_checks_fail()
     {
         // Arrange
-        $method = $this->getPrivateMethod(ServiceHealthController::class, 'performChecks');
+        $method = $this->getPrivateMethod(ServiceHealthCheckingController::class, 'performChecks');
         $checks = [
             TestHealthCheck::class
         ];
@@ -59,7 +59,7 @@ class ServiceHealthControllerTest extends TestCase
         });
 
         // Act
-        $errors = $method->invokeArgs(resolve(ServiceHealthController::class), [$checks]);
+        $errors = $method->invokeArgs(resolve(ServiceHealthCheckingController::class), [$checks]);
 
         // Assert
         $this->assertEquals([ 'The test health check failed' ], $errors);

@@ -5,14 +5,14 @@ namespace Cego\ServiceHealthChecking\Tests;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionException;
-use Cego\ServiceHealthChecking\ServiceHealthServiceProvider;
+use Cego\ServiceHealthChecking\ServiceHealthCheckingServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
     protected function getPackageProviders($app)
     {
         return [
-            ServiceHealthServiceProvider::class,
+            ServiceHealthCheckingServiceProvider::class,
         ];
     }
 
