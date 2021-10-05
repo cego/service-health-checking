@@ -2,19 +2,20 @@
 
 namespace Cego\ServiceHealthChecking\Tests;
 
-class TestHealthCheck implements \Cego\ServiceHealthChecking\Interfaces\HealthCheck
+use Cego\ServiceHealthChecking\BaseHealthCheck;
+
+class TestHealthCheck extends BaseHealthCheck
 {
+    /**
+     * @var string
+     */
+    protected string $description = "This is a test health check";
+
     /**
      * @inheritDoc
      */
     public function check(): bool
     {
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getErrorMessage(): string
-    {
+        // Mock this
     }
 }

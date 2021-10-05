@@ -2,7 +2,7 @@
 
 namespace Cego\ServiceHealthChecking\Controllers;
 
-use Cego\ServiceHealthChecking\Interfaces\HealthCheck;
+use Cego\ServiceHealthChecking\BaseHealthCheck;
 
 class ServiceHealthCheckingController extends Controller
 {
@@ -25,15 +25,18 @@ class ServiceHealthCheckingController extends Controller
      */
     protected function performChecks(array $healthCheckClasses): array
     {
+        $status =
+
         $errors = [];
 
+
         foreach ($healthCheckClasses as $healthCheckClass) {
-            /** @var HealthCheck $healthCheck */
+            /** @var BaseHealthCheck $healthCheck */
             $healthCheck = resolve($healthCheckClass);
 
             // Ensure that we implement the HealthCheck interface
-            if ( ! $healthCheck instanceof HealthCheck) {
-                $errors[] = sprintf('Class %s must implement %s', get_class($healthCheck), HealthCheck::class);
+            if ( ! $healthCheck instanceof BaseHealthCheck) {
+                $errors[] = sprintf('Class %s must implement %s', get_class($healthCheck), BaseHealthCheck::class);
 
                 continue;
             }
@@ -46,4 +49,6 @@ class ServiceHealthCheckingController extends Controller
 
         return $errors;
     }
+
+
 }

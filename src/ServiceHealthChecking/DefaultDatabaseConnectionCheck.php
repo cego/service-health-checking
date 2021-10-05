@@ -1,11 +1,16 @@
 <?php
 namespace Cego\ServiceHealthChecking;
 
+use Exception;
 use Illuminate\Support\Facades\DB;
-use Cego\ServiceHealthChecking\Interfaces\HealthCheck;
 
-class DefaultDatabaseConnectionCheck implements HealthCheck
+class DefaultDatabaseConnectionCheck extends BaseHealthCheck
 {
+    /**
+     * @inheritdoc
+     */
+    protected string $description = 'Checks if it is possible to connect to the default database connection';
+
     /**
      * @inheritDoc
      */
@@ -18,13 +23,5 @@ class DefaultDatabaseConnectionCheck implements HealthCheck
         }
 
         return true;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getErrorMessage(): string
-    {
-        return 'Failed to connect to default database';
     }
 }

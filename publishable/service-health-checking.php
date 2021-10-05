@@ -1,7 +1,7 @@
 <?php
 
 return [
-    // Register health check classes here. They must implement Cego\ServiceHealth\Interfaces\HealthCheck.
+    // Register health check classes here. They must extend Cego\ServiceHealthChecking\BaseHealthCheck.
     'registry' => [
         \Cego\ServiceHealthChecking\DefaultDatabaseConnectionCheck::class
     ]
