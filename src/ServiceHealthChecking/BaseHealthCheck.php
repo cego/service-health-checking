@@ -9,54 +9,38 @@ abstract class BaseHealthCheck
     /**
      * Description of the health check.
      *
-     * @var string
+     * @return string
      */
-    protected string $description;
-
-    /**
-     * Optional
-     *
-     * The error message will be displayed as part of the response if the check fails.
-     * This is useful for returning code exception messages.
-     *
-     * @var string
-     */
-    protected string $errorMessage = '';
+    abstract protected function getDescription(): string;
 
     /**
      * The main health check method. Returns a HealthStatus object.
      *
+     * Examples:
+     * HealthStatus::pass()
+     * HealthStatus::fail()->message('The health check failed')
+     *
      * @return HealthStatus
      */
-    abstract public function check(): HealthStatus;
-
-    /**
-     * Gets the description
-     *
-     * @return string
-     */
-    final public function getDescription(): string
-    {
-        return $this->description;
-    }
+    abstract protected function check(): HealthStatus;
 
     /**
      * Gets the class name of the health check
      *
      * @return string
      */
-    final public function getName(): string
+    private function getName(): string
     {
-        (new ReflectionClass(static::class))->getShortName();
+        return (new ReflectionClass(static::class))->getShortName();
     }
 
     /**
-     * Gets the error message
+     * Get the health check response
      *
-     * @return string
+     * @return HealthCheckResponse
      */
-    final public function getErrorMessage(): string
+    final public function getResponse(): HealthCheckResponse
     {
-        return $this->errorMessage;
+        return new HealthCheckResponse($this->check(), $this->getName(), $this->getDescription());
     }
 }

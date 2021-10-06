@@ -7,21 +7,24 @@ use Illuminate\Support\Facades\DB;
 class DefaultDatabaseConnectionCheck extends BaseHealthCheck
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
-    protected string $description = 'Checks if it is possible to connect to the default database connection';
+    protected function getDescription(): string
+    {
+        return 'Checks if it is possible to connect to the default database connection';
+    }
 
     /**
      * @inheritDoc
      */
-    public function check(): bool
+    protected function check(): HealthStatus
     {
         try {
             DB::connection()->getPdo();
-        } catch (Exception $exception) {
-            return false;
-        }
 
-        return true;
+            return HealthStatus::pass();
+        } catch (Exception $exception) {
+            return HealthStatus::fail()->setMessage('Database connection failed');
+        }
     }
 }

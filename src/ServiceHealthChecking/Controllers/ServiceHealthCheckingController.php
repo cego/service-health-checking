@@ -2,14 +2,18 @@
 
 namespace Cego\ServiceHealthChecking\Controllers;
 
+use Illuminate\Http\JsonResponse;
+use Cego\ServiceHealthChecking\HealthStatus;
+use Cego\ServiceHealthChecking\HealthResponse;
 use Cego\ServiceHealthChecking\BaseHealthCheck;
+use Cego\ServiceHealthChecking\HealthCheckResponse;
 
 class ServiceHealthCheckingController extends Controller
 {
     /**
      * Endpoint for checking the health of a service
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $errors = $this->performChecks(config('service-health-checking.registry') ?? []);
 
@@ -23,32 +27,32 @@ class ServiceHealthCheckingController extends Controller
     /**
      * Performs health checks
      */
-    protected function performChecks(array $healthCheckClasses): array
+    private function performChecks(array $healthCheckClasses): HealthResponse
     {
-        $status =
-
-        $errors = [];
-
+        $response = new HealthResponse();
 
         foreach ($healthCheckClasses as $healthCheckClass) {
             /** @var BaseHealthCheck $healthCheck */
             $healthCheck = resolve($healthCheckClass);
 
-            // Ensure that we implement the HealthCheck interface
+            // Ensure that we extend BaseHealthCheck
             if ( ! $healthCheck instanceof BaseHealthCheck) {
-                $errors[] = sprintf('Class %s must implement %s', get_class($healthCheck), BaseHealthCheck::class);
+                $healthCheckResponse = new HealthCheckResponse(
+                    HealthStatus::fail(),
+                    (new \ReflectionClass($healthCheck))->getShortName(),
+                    '',
+                    sprintf('Class %s must extend %s', get_class($healthCheck), BaseHealthCheck::class)
+                );
+
+                $response->addHealthCheckResponse($healthCheckResponse);
 
                 continue;
             }
 
-            // Perform check and register errors if any
-            if ( ! $healthCheck->check()) {
-                $errors[] = $healthCheck->getErrorMessage();
-            }
+            // Get the health check response
+            $response->addHealthCheckResponse($healthCheck->getResponse());
         }
 
-        return $errors;
+        return $response;
     }
-
-
 }

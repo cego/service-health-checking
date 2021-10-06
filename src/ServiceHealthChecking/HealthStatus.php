@@ -2,104 +2,144 @@
 
 namespace Cego\ServiceHealthChecking;
 
-use Exception;
-
 final class HealthStatus
 {
-    const PASS = 0;
-    const WARNING = 1;
-    const FAIL = 2;
+    private const PASS = 0;
+    private const WARNING = 1;
+    private const FAIL = 2;
 
     /**
-     * The current status
-     *
-     * @var int
+     * @var string[]
      */
-    private int $status = self::PASS;
-
-    /**
-     * Contains the supported statuses
-     *
-     * @var array
-     */
-    private array $supportedStatuses = [
-        self::PASS,
-        self::WARNING,
-        self::FAIL
+    private array $statusText = [
+        self::PASS    => 'pass',
+        self::WARNING => 'warning',
+        self::FAIL    => 'fail',
     ];
 
     /**
+     * The current status code
+     *
+     * @var int
+     */
+    private int $statusCode = self::PASS;
+
+    /**
+     * Holds the status message
+     *
+     * @var string
+     */
+    private string $statusMessage = '';
+
+    /**
+     * Getter for the current status code
+     *
+     * @return int
+     */
+    public function getStatusCode(): int
+    {
+        return $this->statusCode;
+    }
+
+    /**
+     * Instantiates a HealthStatus with status PASS
+     *
      * @return HealthStatus
      */
     public static function pass(): HealthStatus
     {
-        return new self();
+        return resolve(self::class);
     }
 
     /**
-     * @return HealthStatus
+     * Instantiates a HealthStatus with status WARNING
      *
-     * @throws Exception
+     * @return HealthStatus
      */
-    public static function warn(): HealthStatus
+    public static function warning(): HealthStatus
     {
-        $status = new self();
-        $status->setStatusIfWorse(self::WARNING);
+        $status = resolve(self::class);
+        $status->setStatusWarning();
+
         return $status;
     }
 
     /**
-     * @return HealthStatus
+     * Sets status to WARNING
+     */
+    public function setStatusWarning(): HealthStatus
+    {
+        $this->statusCode = self::WARNING;
+
+        return $this;
+    }
+
+    /**
+     * Instantiates a HealthStatus with status FAIL
      *
-     * @throws Exception
+     * @return HealthStatus
      */
     public static function fail(): HealthStatus
     {
-        $status = new self();
-        $status->setStatusIfWorse(self::FAIL);
+        $status = resolve(self::class);
+        $status->setStatusFail();
+
         return $status;
+    }
+
+    /**
+     * Sets status to FAIL
+     */
+    public function setStatusFail(): HealthStatus
+    {
+        $this->statusCode = self::FAIL;
+
+        return $this;
+    }
+
+    /**
+     * Sets the status message
+     *
+     * @param string $message
+     */
+    public function setMessage(string $message): HealthStatus
+    {
+        $this->statusMessage = $message;
+
+        return $this;
     }
 
     /**
      * Sets the status to a new value, if the status is worse than the current one
      *
-     * @throws Exception
+     * @param HealthStatus $status
+     *
+     * @return HealthStatus
      */
-    public function setStatusIfWorse(int $status)
+    public function setStatusIfWorse(HealthStatus $status): HealthStatus
     {
-        if(!in_array($status, $this->supportedStatuses)) {
-            throw new Exception(sprintf('%s: Tried to trigger invalid status "%s"', __METHOD__, $status));
-        }
+        $this->statusCode = max($this->statusCode, $status->getStatusCode());
 
-        $this->status = max($this->status, $status);
+        return $this;
     }
 
     /**
-     * Get the status text
+     * Gets the status text
      *
      * @return string
-     * @throws Exception
      */
-    private function getStatusText(): string
+    public function getText(): string
     {
-        switch ($this->status) {
-            case self::PASS;
-                return 'pass';
-            case self::WARNING:
-                return 'warn';
-            case self::FAIL:
-                return 'fail';
-        }
-
-        throw new Exception(sprintf('%s: Tried to get text for invalid status "%s"', __METHOD__, $this->status));
+        return $this->statusText[$this->statusCode];
     }
 
     /**
-     * @throws Exception
+     * Gets the status message
+     *
+     * @return string
      */
-    public function __toString()
+    public function getMessage(): string
     {
-        return $this->getStatusText();
+        return $this->statusMessage;
     }
-
 }
