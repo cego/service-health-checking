@@ -5,7 +5,7 @@ namespace Cego\ServiceHealthChecking\Tests;
 use Cego\ServiceHealthChecking\HealthStatus;
 use Cego\ServiceHealthChecking\BaseHealthCheck;
 
-class TestHealthCheckWarning extends BaseHealthCheck
+class TestHealthCheckWarn extends BaseHealthCheck
 {
     /**
      * @inheritdoc
@@ -20,6 +20,6 @@ class TestHealthCheckWarning extends BaseHealthCheck
      */
     protected function check(): HealthStatus
     {
-        return HealthStatus::warning()->setMessage('It warns');
+        return HealthStatus::warn()->setMessage('It warns');
     }
 }

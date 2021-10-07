@@ -8,9 +8,9 @@ final class HealthStatus
      * @var string[]
      */
     private array $statusText = [
-        HealthStatusCode::PASS    => 'pass',
-        HealthStatusCode::WARNING => 'warning',
-        HealthStatusCode::FAIL    => 'fail',
+        HealthStatusCode::PASS => 'pass',
+        HealthStatusCode::WARN => 'warn',
+        HealthStatusCode::FAIL => 'fail',
     ];
 
     /**
@@ -48,11 +48,11 @@ final class HealthStatus
     }
 
     /**
-     * Instantiates a HealthStatus with status WARNING
+     * Instantiates a HealthStatus with status WARN
      *
      * @return HealthStatus
      */
-    public static function warning(): HealthStatus
+    public static function warn(): HealthStatus
     {
         $status = resolve(self::class);
         $status->setStatusWarning();
@@ -61,11 +61,11 @@ final class HealthStatus
     }
 
     /**
-     * Sets status to WARNING
+     * Sets status to WARN
      */
     public function setStatusWarning(): HealthStatus
     {
-        $this->statusCode = HealthStatusCode::WARNING;
+        $this->statusCode = HealthStatusCode::WARN;
 
         return $this;
     }

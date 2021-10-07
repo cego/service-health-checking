@@ -10,6 +10,6 @@ namespace Cego\ServiceHealthChecking;
 final class HealthStatusCode
 {
     public const PASS = 0;
-    public const WARNING = 1;
+    public const WARN = 1;
     public const FAIL = 2;
 }

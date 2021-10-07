@@ -46,15 +46,15 @@ class HealthResponseTest extends TestCase
         $healthResponse = new HealthResponse();
         $this->assertEquals('pass', $healthResponse->getStatus()->getText());
 
-        $healthCheckResponse = new HealthCheckResponse(HealthStatus::warning(), '', '', '');
+        $healthCheckResponse = new HealthCheckResponse(HealthStatus::warn(), '', '', '');
         $healthResponse->addHealthCheckResponse($healthCheckResponse);
-        $this->assertEquals('warning', $healthResponse->getStatus()->getText());
+        $this->assertEquals('warn', $healthResponse->getStatus()->getText());
 
         $healthCheckResponse = new HealthCheckResponse(HealthStatus::fail(), '', '', '');
         $healthResponse->addHealthCheckResponse($healthCheckResponse);
         $this->assertEquals('fail', $healthResponse->getStatus()->getText());
 
-        $healthCheckResponse = new HealthCheckResponse(HealthStatus::warning(), '', '', '');
+        $healthCheckResponse = new HealthCheckResponse(HealthStatus::warn(), '', '', '');
         $healthResponse->addHealthCheckResponse($healthCheckResponse);
         $this->assertEquals('fail', $healthResponse->getStatus()->getText());
 

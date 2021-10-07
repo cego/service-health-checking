@@ -5,7 +5,7 @@ namespace Cego\ServiceHealthChecking\Tests\Feature;
 use Cego\ServiceHealthChecking\Tests\TestCase;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheckFail;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheckPass;
-use Cego\ServiceHealthChecking\Tests\TestHealthCheckWarning;
+use Cego\ServiceHealthChecking\Tests\TestHealthCheckWarn;
 
 class ServiceHealthCheckingEndpointTest extends TestCase
 {
@@ -34,10 +34,10 @@ class ServiceHealthCheckingEndpointTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_200_on_warning()
+    public function it_returns_200_on_warn()
     {
         // Arrange
-        config(['service-health-checking.registry' => [ TestHealthCheckWarning::class ] ]);
+        config(['service-health-checking.registry' => [ TestHealthCheckWarn::class ] ]);
 
         // Act
         $response = $this->getJson(route('vendor.service-health-checking.index'));
@@ -45,11 +45,11 @@ class ServiceHealthCheckingEndpointTest extends TestCase
         // Assert
         $response->assertStatus(200);
         $response->assertJson([
-            "status" => "warning",
+            "status" => "warn",
             "checks" => [
                 [
-                    "status"      => "warning",
-                    "name"        => "TestHealthCheckWarning",
+                    "status"      => "warn",
+                    "name"        => "TestHealthCheckWarn",
                     "description" => "This is a test health check that WARNS",
                     "message"     => "It warns"
                 ]
