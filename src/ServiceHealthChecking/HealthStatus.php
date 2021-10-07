@@ -4,17 +4,13 @@ namespace Cego\ServiceHealthChecking;
 
 final class HealthStatus
 {
-    public const PASS = 0;
-    public const WARNING = 1;
-    public const FAIL = 2;
-
     /**
      * @var string[]
      */
     private array $statusText = [
-        self::PASS    => 'pass',
-        self::WARNING => 'warning',
-        self::FAIL    => 'fail',
+        HealthStatusCode::PASS    => 'pass',
+        HealthStatusCode::WARNING => 'warning',
+        HealthStatusCode::FAIL    => 'fail',
     ];
 
     /**
@@ -22,7 +18,7 @@ final class HealthStatus
      *
      * @var int
      */
-    private int $statusCode = self::PASS;
+    private int $statusCode = HealthStatusCode::PASS;
 
     /**
      * Holds the status message
@@ -69,7 +65,7 @@ final class HealthStatus
      */
     public function setStatusWarning(): HealthStatus
     {
-        $this->statusCode = self::WARNING;
+        $this->statusCode = HealthStatusCode::WARNING;
 
         return $this;
     }
@@ -92,7 +88,7 @@ final class HealthStatus
      */
     public function setStatusFail(): HealthStatus
     {
-        $this->statusCode = self::FAIL;
+        $this->statusCode = HealthStatusCode::FAIL;
 
         return $this;
     }
@@ -101,6 +97,8 @@ final class HealthStatus
      * Sets the status message
      *
      * @param string $message
+     *
+     * @return HealthStatus
      */
     public function setMessage(string $message): HealthStatus
     {
