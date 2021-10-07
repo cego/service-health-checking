@@ -34,10 +34,9 @@ class ServiceHealthCheckingController extends Controller
             // Ensure that we extend BaseHealthCheck
             if ( ! $healthCheck instanceof BaseHealthCheck) {
                 $healthCheckResponse = new HealthCheckResponse(
-                    HealthStatus::fail(),
+                    HealthStatus::fail()->setMessage(sprintf('Class %s must extend %s', get_class($healthCheck), BaseHealthCheck::class)),
                     (new \ReflectionClass($healthCheck))->getShortName(),
-                    '',
-                    sprintf('Class %s must extend %s', get_class($healthCheck), BaseHealthCheck::class)
+                    ''
                 );
 
                 $response->addHealthCheckResponse($healthCheckResponse);

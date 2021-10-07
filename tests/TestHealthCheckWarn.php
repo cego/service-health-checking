@@ -12,7 +12,7 @@ class TestHealthCheckWarn extends BaseHealthCheck
      */
     protected function getDescription(): string
     {
-        return "This is a test health check that WARNS";
+        return 'This is a test health check that WARNS';
     }
 
     /**

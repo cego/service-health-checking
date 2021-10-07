@@ -28,15 +28,15 @@ class HealthResponseTest extends TestCase
 
         // Assert
         $this->assertEquals([
-            "status" => "pass",
-            "checks" => [
+            'status' => 'pass',
+            'checks' => [
                  [
-                    "status"      => "pass",
-                    "name"        => "TestHealthCheck",
-                    "description" => "Test health check description",
-                    "message"     => "Test message",
-                ]
-            ]
+                    'status'      => 'pass',
+                    'name'        => 'TestHealthCheck',
+                    'description' => 'Test health check description',
+                    'message'     => 'Test message',
+                ],
+            ],
         ], $array);
     }
 

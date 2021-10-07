@@ -12,7 +12,7 @@ class TestHealthCheckPass extends BaseHealthCheck
      */
     protected function getDescription(): string
     {
-        return "This is a test health check that PASSES";
+        return 'This is a test health check that PASSES';
     }
 
     /**

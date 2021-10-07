@@ -21,15 +21,15 @@ class ServiceHealthCheckingEndpointTest extends TestCase
         // Assert
         $response->assertStatus(200);
         $response->assertJson([
-            "status" => "pass",
-            "checks" => [
+            'status' => 'pass',
+            'checks' => [
                 [
-                    "status"      => "pass",
-                    "name"        => "TestHealthCheckPass",
-                    "description" => "This is a test health check that PASSES",
-                    "message"     => ""
-                ]
-            ]
+                    'status'      => 'pass',
+                    'name'        => 'TestHealthCheckPass',
+                    'description' => 'This is a test health check that PASSES',
+                    'message'     => '',
+                ],
+            ],
         ]);
     }
 
@@ -45,15 +45,15 @@ class ServiceHealthCheckingEndpointTest extends TestCase
         // Assert
         $response->assertStatus(200);
         $response->assertJson([
-            "status" => "warn",
-            "checks" => [
+            'status' => 'warn',
+            'checks' => [
                 [
-                    "status"      => "warn",
-                    "name"        => "TestHealthCheckWarn",
-                    "description" => "This is a test health check that WARNS",
-                    "message"     => "It warns"
-                ]
-            ]
+                    'status'      => 'warn',
+                    'name'        => 'TestHealthCheckWarn',
+                    'description' => 'This is a test health check that WARNS',
+                    'message'     => 'It warns',
+                ],
+            ],
         ]);
     }
 
@@ -69,15 +69,15 @@ class ServiceHealthCheckingEndpointTest extends TestCase
         // Assert
         $response->assertStatus(200);
         $response->assertJson([
-            "status" => "fail",
-            "checks" => [
+            'status' => 'fail',
+            'checks' => [
                 [
-                    "status"      => "fail",
-                    "name"        => "TestHealthCheckFail",
-                    "description" => "This is a test health check that FAILS",
-                    "message"     => "It failed"
-                ]
-            ]
+                    'status'      => 'fail',
+                    'name'        => 'TestHealthCheckFail',
+                    'description' => 'This is a test health check that FAILS',
+                    'message'     => 'It failed',
+                ],
+            ],
         ]);
     }
 }
