@@ -15,7 +15,7 @@ class ServiceHealthCheckingServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../../publishable/service-health-checking.php' => config_path('service-health-checking.php')
-        ]);
+        ], 'config');
 
         $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
     }
