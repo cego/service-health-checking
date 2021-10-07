@@ -3,10 +3,7 @@ This package contains core functionality for HTTP health checking of Laravel ser
 
 ## Usage
 When the package is installed, a health endpoint, `/vendor/service-health-checking` is exposed. The endpoint
-returns either `200 OK` if all the overall status is `pass` or `warn`, or `500 Internal Server Error` if the status
-is `fail`.
-
-The endpoint will respond with a JSON data object with the following format:
+returns `200 OK` and a body with a JSON data object with the following format:
 ```json
 {
     "status": "pass|warn|fail",

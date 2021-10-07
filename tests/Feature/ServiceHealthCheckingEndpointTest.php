@@ -10,7 +10,7 @@ use Cego\ServiceHealthChecking\Tests\TestHealthCheckWarn;
 class ServiceHealthCheckingEndpointTest extends TestCase
 {
     /** @test */
-    public function it_returns_200_on_success()
+    public function it_returns_correct_response_on_success()
     {
         // Arrange
         config(['service-health-checking.registry' => [ TestHealthCheckPass::class ] ]);
@@ -34,7 +34,7 @@ class ServiceHealthCheckingEndpointTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_200_on_warn()
+    public function it_returns_correct_response_on_warn()
     {
         // Arrange
         config(['service-health-checking.registry' => [ TestHealthCheckWarn::class ] ]);
@@ -58,7 +58,7 @@ class ServiceHealthCheckingEndpointTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_500_on_failure()
+    public function it_returns_correct_response_on_failure()
     {
         // Arrange
         config(['service-health-checking.registry' => [ TestHealthCheckFail::class ] ]);
@@ -67,7 +67,7 @@ class ServiceHealthCheckingEndpointTest extends TestCase
         $response = $this->getJson(route('vendor.service-health-checking.index'));
 
         // Assert
-        $response->assertStatus(500);
+        $response->assertStatus(200);
         $response->assertJson([
             "status" => "fail",
             "checks" => [

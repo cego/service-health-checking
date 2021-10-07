@@ -6,7 +6,6 @@ use Illuminate\Http\JsonResponse;
 use Cego\ServiceHealthChecking\HealthStatus;
 use Cego\ServiceHealthChecking\HealthResponse;
 use Cego\ServiceHealthChecking\BaseHealthCheck;
-use Cego\ServiceHealthChecking\HealthStatusCode;
 use Cego\ServiceHealthChecking\HealthCheckResponse;
 
 class ServiceHealthCheckingController extends Controller
@@ -18,11 +17,7 @@ class ServiceHealthCheckingController extends Controller
     {
         $healthResponse = $this->performChecks(config('service-health-checking.registry') ?? []);
 
-        $responseCode = $healthResponse->getStatus()->getStatusCode() == HealthStatusCode::FAIL
-            ? 500
-            : 200;
-
-        return response()->json($healthResponse->toArray(), $responseCode);
+        return response()->json($healthResponse->toArray());
     }
 
     /**
