@@ -15,13 +15,13 @@ class ServiceHealthCheckingController extends Controller
      */
     public function index(): JsonResponse
     {
-        $errors = $this->performChecks(config('service-health-checking.registry') ?? []);
+        $healthResponse = $this->performChecks(config('service-health-checking.registry') ?? []);
 
-        if ($errors) {
-            return response()->json(['errors' => $errors], 500);
-        }
+        $responseCode = $healthResponse->getStatus()->getStatusCode() == HealthStatus::FAIL
+            ? 500
+            : 200;
 
-        return response()->json();
+        return response()->json($healthResponse->toArray(), $responseCode);
     }
 
     /**

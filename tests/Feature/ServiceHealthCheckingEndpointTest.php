@@ -2,9 +2,10 @@
 
 namespace Cego\ServiceHealthChecking\Tests\Feature;
 
-use Mockery\MockInterface;
 use Cego\ServiceHealthChecking\Tests\TestCase;
-use Cego\ServiceHealthChecking\Tests\TestHealthCheck;
+use Cego\ServiceHealthChecking\Tests\TestHealthCheckFail;
+use Cego\ServiceHealthChecking\Tests\TestHealthCheckPass;
+use Cego\ServiceHealthChecking\Tests\TestHealthCheckWarning;
 
 class ServiceHealthCheckingEndpointTest extends TestCase
 {
@@ -12,37 +13,71 @@ class ServiceHealthCheckingEndpointTest extends TestCase
     public function it_returns_200_on_success()
     {
         // Arrange
-        config(['service-health-checking.registry' => [ TestHealthCheck::class ] ]);
-
-        // Expect
-        $this->mock(TestHealthCheck::class, function (MockInterface $mock) {
-            return $mock->expects('check')->once()->andReturn(true);
-        });
+        config(['service-health-checking.registry' => [ TestHealthCheckPass::class ] ]);
 
         // Act
         $response = $this->getJson(route('vendor.service-health-checking.index'));
 
         // Assert
         $response->assertStatus(200);
+        $response->assertJson([
+            "status" => "pass",
+            "checks" => [
+                [
+                    "status"      => "pass",
+                    "name"        => "TestHealthCheckPass",
+                    "description" => "This is a test health check that PASSES",
+                    "message"     => ""
+                ]
+            ]
+        ]);
+    }
+
+    /** @test */
+    public function it_returns_200_on_warning()
+    {
+        // Arrange
+        config(['service-health-checking.registry' => [ TestHealthCheckWarning::class ] ]);
+
+        // Act
+        $response = $this->getJson(route('vendor.service-health-checking.index'));
+
+        // Assert
+        $response->assertStatus(200);
+        $response->assertJson([
+            "status" => "warning",
+            "checks" => [
+                [
+                    "status"      => "warning",
+                    "name"        => "TestHealthCheckWarning",
+                    "description" => "This is a test health check that WARNS",
+                    "message"     => "It warns"
+                ]
+            ]
+        ]);
     }
 
     /** @test */
     public function it_returns_500_on_failure()
     {
         // Arrange
-        config(['service-health-checking.registry' => [ TestHealthCheck::class ] ]);
-
-        // Expect
-        $this->mock(TestHealthCheck::class, function (MockInterface $mock) {
-            $mock->expects('check')->once()->andReturn(false);
-            $mock->expects('getErrorMessage')->once()->andReturn('The test health check failed');
-        });
+        config(['service-health-checking.registry' => [ TestHealthCheckFail::class ] ]);
 
         // Act
         $response = $this->getJson(route('vendor.service-health-checking.index'));
 
         // Assert
         $response->assertStatus(500);
-        $response->assertJsonPath('errors.0', "The test health check failed");
+        $response->assertJson([
+            "status" => "fail",
+            "checks" => [
+                [
+                    "status"      => "fail",
+                    "name"        => "TestHealthCheckFail",
+                    "description" => "This is a test health check that FAILS",
+                    "message"     => "It failed"
+                ]
+            ]
+        ]);
     }
 }

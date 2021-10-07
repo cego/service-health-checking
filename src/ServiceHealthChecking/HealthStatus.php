@@ -4,9 +4,9 @@ namespace Cego\ServiceHealthChecking;
 
 final class HealthStatus
 {
-    private const PASS = 0;
-    private const WARNING = 1;
-    private const FAIL = 2;
+    public const PASS = 0;
+    public const WARNING = 1;
+    public const FAIL = 2;
 
     /**
      * @var string[]
