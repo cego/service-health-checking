@@ -38,11 +38,15 @@ class HealthResponse implements Arrayable
      * Add a health check response to the health response
      *
      * @param HealthCheckResponse $response
+     *
+     * @return HealthResponse
      */
-    public function addHealthCheckResponse(HealthCheckResponse $response)
+    public function addHealthCheckResponse(HealthCheckResponse $response): HealthResponse
     {
         $this->checkResponses[] = $response;
         $this->status->setStatusIfWorse($response->getStatus());
+
+        return $this;
     }
 
     /**
