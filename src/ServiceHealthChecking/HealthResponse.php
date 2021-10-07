@@ -52,7 +52,7 @@ class HealthResponse implements Arrayable
     {
         return [
             'status' => $this->status->getText(),
-            'checks' => array_map(fn (HealthCheckResponse $checkResponse) => $checkResponse->toArray(), $this->checkResponses)
+            'checks' => array_map(fn (HealthCheckResponse $checkResponse) => $checkResponse->toArray(), $this->checkResponses),
         ];
     }
 }

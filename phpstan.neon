@@ -1,0 +1,6 @@
+includes:
+    - ./vendor/cego/phpstan/extension.neon
+
+parameters:
+    paths:
+        - ./src

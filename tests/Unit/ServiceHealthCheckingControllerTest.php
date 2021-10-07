@@ -28,7 +28,7 @@ class ServiceHealthCheckingControllerTest extends TestCase
         // Arrange
         $method = $this->getPrivateMethod(ServiceHealthCheckingController::class, 'performChecks');
         $checks = [
-            TestHealthCheckPass::class
+            TestHealthCheckPass::class,
         ];
 
         // Act
@@ -36,15 +36,15 @@ class ServiceHealthCheckingControllerTest extends TestCase
 
         // Assert
         $this->assertEquals([
-            "status" => "pass",
-            "checks" => [
+            'status' => 'pass',
+            'checks' => [
                 [
-                    "status"      => "pass",
-                    "name"        => "TestHealthCheckPass",
-                    "description" => "This is a test health check that PASSES",
-                    "message"     => ""
-                ]
-            ]
+                    'status'      => 'pass',
+                    'name'        => 'TestHealthCheckPass',
+                    'description' => 'This is a test health check that PASSES',
+                    'message'     => '',
+                ],
+            ],
         ], $healthResponse->toArray());
     }
 
@@ -54,7 +54,7 @@ class ServiceHealthCheckingControllerTest extends TestCase
         // Arrange
         $method = $this->getPrivateMethod(ServiceHealthCheckingController::class, 'performChecks');
         $checks = [
-            TestHealthCheckFail::class
+            TestHealthCheckFail::class,
         ];
 
         // Act
@@ -62,15 +62,15 @@ class ServiceHealthCheckingControllerTest extends TestCase
 
         // Assert
         $this->assertEquals([
-            "status" => "fail",
-            "checks" => [
+            'status' => 'fail',
+            'checks' => [
                 [
-                    "status"      => "fail",
-                    "name"        => "TestHealthCheckFail",
-                    "description" => "This is a test health check that FAILS",
-                    "message"     => "It failed"
-                ]
-            ]
+                    'status'      => 'fail',
+                    'name'        => 'TestHealthCheckFail',
+                    'description' => 'This is a test health check that FAILS',
+                    'message'     => 'It failed',
+                ],
+            ],
         ], $healthResponse->toArray());
     }
 }

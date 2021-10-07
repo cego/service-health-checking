@@ -21,7 +21,7 @@ The `checks` array contains an entry for each registered health check.
 
 ## Creating health checks
 To create a health check for your service, simply create a class that extends
-`\Cego\ServiceHealthChecking\BaseHealthCheck`. The base method has 2 abstract emthods:
+`\Cego\ServiceHealthChecking\BaseHealthCheck`. The base method has 2 abstract methods:
 1. `check(): HealthStatus` should perform the check and return a `HealthStatus` object.
 2. `getDescription(): string` should return a description of the health check.
 

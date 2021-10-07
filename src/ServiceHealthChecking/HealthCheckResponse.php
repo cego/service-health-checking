@@ -36,7 +36,7 @@ class HealthCheckResponse implements Arrayable
             'status'      => $this->status->getText(),
             'name'        => $this->name,
             'description' => $this->description,
-            'message'     => $this->status->getMessage()
+            'message'     => $this->status->getMessage(),
         ];
     }
 }

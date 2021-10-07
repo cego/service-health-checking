@@ -26,7 +26,7 @@ class HealthCheckResponseTest extends TestCase
             'status'      => 'fail',
             'name'        => 'TestHealthCheck',
             'description' => 'Test health check description',
-            'message'     => 'Test message'
+            'message'     => 'Test message',
         ], $array);
     }
 }

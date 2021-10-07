@@ -12,7 +12,7 @@ class TestHealthCheckFail extends BaseHealthCheck
      */
     protected function getDescription(): string
     {
-        return "This is a test health check that FAILS";
+        return 'This is a test health check that FAILS';
     }
 
     /**
