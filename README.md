@@ -16,12 +16,12 @@ The endpoint will respond with a JSON data object with the following format:
             "name": "HealthCheckClassName",
             "description": "Description defined in the health check class",
             "message": "Message set in the HealthStatus object"
-        },
-        {
-        ...
+        }
     ]
 }
 ```
+The `checks` array contains an entry for each registered health check.
+
 ## Creating health checks
 To create a health check for your service, simply create a class that extends
 `\Cego\ServiceHealthChecking\BaseHealthCheck`. The base method has 2 abstract emthods:
