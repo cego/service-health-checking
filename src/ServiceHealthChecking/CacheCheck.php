@@ -11,7 +11,7 @@ class CacheCheck extends BaseHealthCheck
      */
     protected function getDescription(): string
     {
-        return 'Checks if it is write to cache';
+        return 'Checks read/write access to the cache';
     }
 
     /**
