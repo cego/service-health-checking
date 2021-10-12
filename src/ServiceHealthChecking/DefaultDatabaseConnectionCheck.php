@@ -11,7 +11,7 @@ class DefaultDatabaseConnectionCheck extends BaseHealthCheck
      */
     protected function getDescription(): string
     {
-        return 'Checks if it is possible to connect to the default database connection';
+        return 'Checks if it is possible to connect to the default database';
     }
 
     /**
