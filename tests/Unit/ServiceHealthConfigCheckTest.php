@@ -2,11 +2,9 @@
 
 namespace Cego\ServiceHealthChecking\Tests\Unit;
 
-use Cego\ServiceHealthChecking\HealthStatus;
+use Cego\ServiceHealthChecking\Tests\TestCase;
 use Cego\ServiceHealthChecking\HealthStatusCode;
 use Cego\ServiceHealthChecking\ServiceHealthConfigCheck;
-use Cego\ServiceHealthChecking\Tests\TestCase;
-use Mockery\MockInterface;
 
 class ServiceHealthConfigCheckTest extends TestCase
 {
@@ -16,7 +14,7 @@ class ServiceHealthConfigCheckTest extends TestCase
     {
         parent::setUp();
 
-        $config = include __DIR__.'/../../publishable/service-health-checking.php';
+        $config = include __DIR__ . '/../../publishable/service-health-checking.php';
         config(['service-health-checking' => $config]);
         $mock = $this->createPartialMock(ServiceHealthConfigCheck::class, ['shouldPerformRequestInsuranceConfigCheck']);
         $mock->expects($this->once())->method('shouldPerformRequestInsuranceConfigCheck')->willReturn(true);

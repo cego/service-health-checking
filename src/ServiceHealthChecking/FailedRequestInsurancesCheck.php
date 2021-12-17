@@ -23,14 +23,24 @@ class FailedRequestInsurancesCheck extends BaseHealthCheck
     }
 
     /**
+     * Gets the failed RI count
+     *
+     * @return int
+     */
+    protected function getCount(): int
+    {
+        /** @phpstan-ignore-next-line  */
+        return RequestInsurance::where('abandoned_at', null)
+            ->where('paused_at', '!=', null)
+            ->count();
+    }
+
+    /**
      * @inheritDoc
      */
     protected function check(): HealthStatus
     {
-        /** @phpstan-ignore-next-line  */
-        $count = RequestInsurance::where('abandoned_at', null)
-            ->where('paused_at', '!=', null)
-            ->count();
+        $count = $this->getCount();
 
         $warnThreshold = config('service-health-checking.request-insurance.failed-thresholds.warn', 0);
         $failThreshold = config('service-health-checking.request-insurance.failed-thresholds.fail', 0);

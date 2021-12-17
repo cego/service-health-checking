@@ -23,15 +23,25 @@ class ActiveRequestInsurancesCheck extends BaseHealthCheck
     }
 
     /**
+     * Gets the active RI count
+     *
+     * @return int
+     */
+    protected function getCount(): int
+    {
+        /** @phpstan-ignore-next-line  */
+        return RequestInsurance::where('completed_at', null)
+            ->where('abandoned_at', null)
+            ->where('paused_at', null)
+            ->count();
+    }
+
+    /**
      * @inheritDoc
      */
     protected function check(): HealthStatus
     {
-        /** @phpstan-ignore-next-line  */
-        $count = RequestInsurance::where('completed_at', null)
-            ->where('abandoned_at', null)
-            ->where('paused_at', null)
-            ->count();
+        $count = $this->getCount();
 
         $warnThreshold = config('service-health-checking.request-insurance.active-thresholds.warn', 0);
         $failThreshold = config('service-health-checking.request-insurance.active-thresholds.fail', 0);

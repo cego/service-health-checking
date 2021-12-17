@@ -61,7 +61,7 @@ class ServiceHealthConfigCheck extends BaseHealthCheck
      */
     private function checkRequestInsuranceConfig()
     {
-        if ( ! $this->shouldPerformRequestInsuranceConfigCheck() ) {
+        if ( ! $this->shouldPerformRequestInsuranceConfigCheck()) {
             return;
         }
 
