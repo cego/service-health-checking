@@ -3,8 +3,11 @@
 return [
     // Register health check classes here. They must extend Cego\ServiceHealthChecking\BaseHealthCheck.
     'registry' => [
+        \Cego\ServiceHealthChecking\ServiceHealthConfigCheck::class,
         \Cego\ServiceHealthChecking\DefaultDatabaseConnectionCheck::class,
         \Cego\ServiceHealthChecking\CacheCheck::class,
+        \Cego\ServiceHealthChecking\FailedRequestInsurancesCheck::class,
+        \Cego\ServiceHealthChecking\ActiveRequestInsurancesCheck::class,
     ],
     // Define the thresholds for request insurance health levels
     'request-insurance' => [
