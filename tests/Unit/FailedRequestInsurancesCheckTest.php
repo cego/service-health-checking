@@ -58,4 +58,32 @@ class FailedRequestInsurancesCheckTest extends TestCase
         // Assert
         $this->assertEquals(HealthStatusCode::FAIL, $response->getStatus()->getStatusCode());
     }
+
+    /** @test */
+    public function it_disables_warn()
+    {
+        // Arrange
+        config(['service-health-checking.request-insurance.failed-thresholds.warn' => 0]);
+        $this->mock->expects($this->once())->method('getCount')->willReturn(10);
+
+        // Act
+        $response = $this->mock->getResponse();
+
+        // Assert
+        $this->assertEquals(HealthStatusCode::PASS, $response->getStatus()->getStatusCode());
+    }
+
+    /** @test */
+    public function it_disables_fail()
+    {
+        // Arrange
+        config(['service-health-checking.request-insurance.failed-thresholds.fail' => 0]);
+        $this->mock->expects($this->once())->method('getCount')->willReturn(50);
+
+        // Act
+        $response = $this->mock->getResponse();
+
+        // Assert
+        $this->assertEquals(HealthStatusCode::WARN, $response->getStatus()->getStatusCode());
+    }
 }
