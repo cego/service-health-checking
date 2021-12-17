@@ -8,14 +8,17 @@ return [
     ],
     // Define the thresholds for request insurance health levels
     'request-insurance' => [
-        'perform-check'     => true,    // If true, RI checks will be performed only if the package is installed
+        // If true, RI checks will be performed only if the package is installed
+        'perform-check'     => true,
+        // When active RIs cross these thresholds, the check will warn or fail. 0 = disable.
         'active-thresholds' => [
             'warn' => 50,
-            'fail' => 100,
+            'fail' => 0,
         ],
+        // When failed RIs cross these thresholds, the check will warn or fail. 0 = disable.
         'failed-thresholds' => [
-            'warn' => 1,
-            'fail' => 10,
+            'warn' => 5,
+            'fail' => 50,
         ],
     ],
 ];

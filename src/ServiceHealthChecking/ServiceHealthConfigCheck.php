@@ -3,7 +3,7 @@ namespace Cego\ServiceHealthChecking;
 
 use Composer\InstalledVersions;
 
-class ServicehealthConfigCheck extends BaseHealthCheck
+class ServiceHealthConfigCheck extends BaseHealthCheck
 {
     private array $errorMessages = [];
     private bool $configIsOk = true;
@@ -45,13 +45,23 @@ class ServicehealthConfigCheck extends BaseHealthCheck
     }
 
     /**
+     * Determines whether Request Insurance config check should be performed
+     *
+     * @return bool
+     */
+    protected function shouldPerformRequestInsuranceConfigCheck(): bool
+    {
+        return ! InstalledVersions::isInstalled('cego/request-insurance') || config('service-health-checking.request-insurance.perform-check') === false;
+    }
+
+    /**
      * Checks the request insurance config of Service Health Checking package
      *
      * @return void
      */
     private function checkRequestInsuranceConfig()
     {
-        if ( ! InstalledVersions::isInstalled('cego/request-insurance') || config('service-health-checking.request-insurance.perform-check') === false) {
+        if ( ! $this->shouldPerformRequestInsuranceConfigCheck() ) {
             return;
         }
 
@@ -77,12 +87,20 @@ class ServicehealthConfigCheck extends BaseHealthCheck
             }
         }
 
-        if (config('service-health-checking.request-insurance.active-thresholds.warn') > config('service-health-checking.request-insurance.active-thresholds.warn')) {
+        if (
+            config('service-health-checking.request-insurance.active-thresholds.warn') != 0 &&
+            config('service-health-checking.request-insurance.active-thresholds.fail') != 0 &&
+            config('service-health-checking.request-insurance.active-thresholds.warn') > config('service-health-checking.request-insurance.active-thresholds.fail')
+        ) {
             $this->configIsOk = false;
             $this->errorMessages[] = 'active-thresholds.warn must not be greater than active-thresholds.fail';
         }
 
-        if (config('service-health-checking.request-insurance.failed-thresholds.warn') > config('service-health-checking.request-insurance.failed-thresholds.warn')) {
+        if (
+            config('service-health-checking.request-insurance.failed-thresholds.warn') != 0 &&
+            config('service-health-checking.request-insurance.failed-thresholds.fail') != 0 &&
+            config('service-health-checking.request-insurance.failed-thresholds.warn') > config('service-health-checking.request-insurance.failed-thresholds.fail')
+        ) {
             $this->configIsOk = false;
             $this->errorMessages[] = 'failed-thresholds.warn must not be greater than failed-thresholds.fail';
         }
