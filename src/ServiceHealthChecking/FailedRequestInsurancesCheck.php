@@ -31,7 +31,7 @@ class FailedRequestInsurancesCheck extends BaseHealthCheck
     {
         /** @phpstan-ignore-next-line  */
         return RequestInsurance::where('abandoned_at', null)
-            ->where('completed_at', '!=', null)
+            ->where('completed_at', null)
             ->where('paused_at', '!=', null)
             ->count();
     }
