@@ -51,7 +51,7 @@ class ServiceHealthConfigCheck extends BaseHealthCheck
      */
     protected function shouldPerformRequestInsuranceConfigCheck(): bool
     {
-        return ! InstalledVersions::isInstalled('cego/request-insurance') || config('service-health-checking.request-insurance.perform-check') === false;
+        return InstalledVersions::isInstalled('cego/request-insurance') && config('service-health-checking.request-insurance.perform-check');
     }
 
     /**
