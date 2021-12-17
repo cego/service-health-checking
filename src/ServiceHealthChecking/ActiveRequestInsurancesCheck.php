@@ -17,7 +17,7 @@ class ActiveRequestInsurancesCheck extends BaseHealthCheck
     /**
      * @inheritDoc
      */
-    protected function shouldSkip(): bool
+    public function shouldSkip(): bool
     {
         return ! InstalledVersions::isInstalled('cego/request-insurance') || ! config('service-health-checking.request-insurance.perform-check');
     }

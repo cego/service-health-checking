@@ -29,7 +29,7 @@ abstract class BaseHealthCheck
      *
      * @return bool
      */
-    protected function shouldSkip(): bool
+    public function shouldSkip(): bool
     {
         return false;
     }
