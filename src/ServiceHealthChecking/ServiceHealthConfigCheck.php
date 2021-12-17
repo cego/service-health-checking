@@ -83,7 +83,7 @@ class ServiceHealthConfigCheck extends BaseHealthCheck
 
             if ( ! is_int($value) || $value < 0) {
                 $this->configIsOk = false;
-                $this->errorMessages[] = sprintf('%s must be an integer greater than 0', $key);
+                $this->errorMessages[] = sprintf('%s must be an integer greater than or equal to 0', $key);
             }
         }
 
