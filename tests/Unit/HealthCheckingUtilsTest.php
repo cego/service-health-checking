@@ -3,20 +3,17 @@
 namespace Cego\ServiceHealthChecking\Tests\Unit;
 
 use Cego\ServiceHealthChecking\Tests\TestCase;
+use Cego\ServiceHealthChecking\HealthCheckingUtils;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheckFail;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheckPass;
-use Cego\ServiceHealthChecking\Controllers\ServiceHealthCheckingController;
 
-class ServiceHealthCheckingControllerTest extends TestCase
+class HealthCheckingUtilsTest extends TestCase
 {
     /** @test */
     public function performChecks_returns_empty_checks_array_if_no_checks()
     {
-        // Arrange
-        $method = $this->getPrivateMethod(ServiceHealthCheckingController::class, 'performChecks');
-
         // Act
-        $healthResponse = $method->invokeArgs(resolve(ServiceHealthCheckingController::class), [[]]);
+        $healthResponse = HealthCheckingUtils::performChecks([]);
 
         // Assert
         $this->assertEquals(['status' => 'pass', 'checks' => []], $healthResponse->toArray());
@@ -26,13 +23,12 @@ class ServiceHealthCheckingControllerTest extends TestCase
     public function performChecks_returns_correct_response_if_checks_passes()
     {
         // Arrange
-        $method = $this->getPrivateMethod(ServiceHealthCheckingController::class, 'performChecks');
         $checks = [
             TestHealthCheckPass::class,
         ];
 
         // Act
-        $healthResponse = $method->invokeArgs(resolve(ServiceHealthCheckingController::class), [$checks]);
+        $healthResponse = HealthCheckingUtils::performChecks($checks);
 
         // Assert
         $this->assertEquals([
@@ -52,13 +48,12 @@ class ServiceHealthCheckingControllerTest extends TestCase
     public function performChecks_returns_array_with_errors_if_checks_fail()
     {
         // Arrange
-        $method = $this->getPrivateMethod(ServiceHealthCheckingController::class, 'performChecks');
         $checks = [
             TestHealthCheckFail::class,
         ];
 
         // Act
-        $healthResponse = $method->invokeArgs(resolve(ServiceHealthCheckingController::class), [$checks]);
+        $healthResponse = HealthCheckingUtils::performChecks($checks);
 
         // Assert
         $this->assertEquals([

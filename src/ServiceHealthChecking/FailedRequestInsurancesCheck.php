@@ -30,9 +30,9 @@ class FailedRequestInsurancesCheck extends BaseHealthCheck
     protected function getCount(): int
     {
         /** @phpstan-ignore-next-line  */
-        return RequestInsurance::where('abandoned_at', null)
-            ->where('completed_at', null)
-            ->where('paused_at', '!=', null)
+        return RequestInsurance::whereNull('abandoned_at')
+            ->whereNull('completed_at')
+            ->whereNotNull('paused_at')
             ->count();
     }
 
