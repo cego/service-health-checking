@@ -7,7 +7,7 @@ class HealthCheckingUtils
     /**
      * Performs health checks
      */
-    public function performChecks(array $healthCheckClasses): HealthResponse
+    public static function performChecks(array $healthCheckClasses): HealthResponse
     {
         $response = new HealthResponse();
 

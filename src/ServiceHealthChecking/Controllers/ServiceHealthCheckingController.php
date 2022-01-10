@@ -12,7 +12,7 @@ class ServiceHealthCheckingController extends Controller
      */
     public function index(): JsonResponse
     {
-        $healthResponse = resolve(HealthCheckingUtils::class)->performChecks(config('service-health-checking.registry') ?? []);
+        $healthResponse = HealthCheckingUtils::performChecks(config('service-health-checking.registry') ?? []);
 
         return response()->json($healthResponse->toArray());
     }
