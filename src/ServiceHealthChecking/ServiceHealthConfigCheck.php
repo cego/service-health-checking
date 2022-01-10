@@ -2,9 +2,17 @@
 namespace Cego\ServiceHealthChecking;
 
 use Composer\InstalledVersions;
+use Illuminate\Config\Repository;
+use Illuminate\Contracts\Foundation\Application;
 
 class ServiceHealthConfigCheck extends BaseHealthCheck
 {
+    const TYPE_FAILED = 'failed';
+    const TYPE_ACTIVE = 'active';
+
+    const SEVERITY_WARN = 'warn';
+    const SEVERITY_FAIL = 'fail';
+
     private array $errorMessages = [];
     private bool $configIsOk = true;
 
@@ -88,21 +96,36 @@ class ServiceHealthConfigCheck extends BaseHealthCheck
         }
 
         if (
-            config('service-health-checking.request-insurance.active-thresholds.warn') != 0 &&
-            config('service-health-checking.request-insurance.active-thresholds.fail') != 0 &&
-            config('service-health-checking.request-insurance.active-thresholds.warn') > config('service-health-checking.request-insurance.active-thresholds.fail')
+            $this->getThreshold(self::TYPE_ACTIVE, self::SEVERITY_WARN) != 0 &&
+            $this->getThreshold(self::TYPE_ACTIVE, self::SEVERITY_FAIL) != 0 &&
+            $this->getThreshold(self::TYPE_ACTIVE, self::SEVERITY_WARN) > $this->getThreshold(self::TYPE_ACTIVE, self::SEVERITY_FAIL)
         ) {
             $this->configIsOk = false;
             $this->errorMessages[] = 'active-thresholds.warn must not be greater than active-thresholds.fail';
         }
 
         if (
-            config('service-health-checking.request-insurance.failed-thresholds.warn') != 0 &&
-            config('service-health-checking.request-insurance.failed-thresholds.fail') != 0 &&
-            config('service-health-checking.request-insurance.failed-thresholds.warn') > config('service-health-checking.request-insurance.failed-thresholds.fail')
+            $this->getThreshold(self::TYPE_FAILED, self::SEVERITY_WARN) != 0 &&
+            $this->getThreshold(self::TYPE_FAILED, self::SEVERITY_FAIL) != 0 &&
+            $this->getThreshold(self::TYPE_FAILED, self::SEVERITY_WARN) > $this->getThreshold(self::TYPE_FAILED, self::SEVERITY_FAIL)
         ) {
             $this->configIsOk = false;
             $this->errorMessages[] = 'failed-thresholds.warn must not be greater than failed-thresholds.fail';
         }
+    }
+
+    /**
+     * Fetches threshold value from config
+     *
+     * @param string $type
+     * @param string $severity
+     *
+     * @return Repository|Application|mixed
+     */
+    private function getThreshold(string $type, string $severity)
+    {
+        $configKey = sprintf('service-health-checking.request-insurance.%s-thresholds.%s', $type, $severity);
+
+        return config($configKey);
     }
 }
