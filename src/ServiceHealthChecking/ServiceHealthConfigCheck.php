@@ -95,23 +95,39 @@ class ServiceHealthConfigCheck extends BaseHealthCheck
             }
         }
 
-        if (
-            $this->getThreshold(self::TYPE_ACTIVE, self::SEVERITY_WARN) != 0 &&
-            $this->getThreshold(self::TYPE_ACTIVE, self::SEVERITY_FAIL) != 0 &&
-            $this->getThreshold(self::TYPE_ACTIVE, self::SEVERITY_WARN) > $this->getThreshold(self::TYPE_ACTIVE, self::SEVERITY_FAIL)
-        ) {
+        if ($this->activeThresholdConfigIsOk()) {
             $this->configIsOk = false;
             $this->errorMessages[] = 'active-thresholds.warn must not be greater than active-thresholds.fail';
         }
 
-        if (
-            $this->getThreshold(self::TYPE_FAILED, self::SEVERITY_WARN) != 0 &&
-            $this->getThreshold(self::TYPE_FAILED, self::SEVERITY_FAIL) != 0 &&
-            $this->getThreshold(self::TYPE_FAILED, self::SEVERITY_WARN) > $this->getThreshold(self::TYPE_FAILED, self::SEVERITY_FAIL)
-        ) {
+        if ($this->failedThresholdConfigIsOk()) {
             $this->configIsOk = false;
             $this->errorMessages[] = 'failed-thresholds.warn must not be greater than failed-thresholds.fail';
         }
+    }
+
+    /**
+     * Checks if the active threshold config is ok
+     *
+     * @return bool
+     */
+    private function activeThresholdConfigIsOk(): bool
+    {
+        return $this->getThreshold(self::TYPE_ACTIVE, self::SEVERITY_WARN) != 0 &&
+            $this->getThreshold(self::TYPE_ACTIVE, self::SEVERITY_FAIL) != 0 &&
+            $this->getThreshold(self::TYPE_ACTIVE, self::SEVERITY_WARN) > $this->getThreshold(self::TYPE_ACTIVE, self::SEVERITY_FAIL);
+    }
+
+    /**
+     * Checks if the failed threshold config is ok
+     *
+     * @return bool
+     */
+    private function failedThresholdConfigIsOk(): bool
+    {
+        return $this->getThreshold(self::TYPE_FAILED, self::SEVERITY_WARN) != 0 &&
+            $this->getThreshold(self::TYPE_FAILED, self::SEVERITY_FAIL) != 0 &&
+            $this->getThreshold(self::TYPE_FAILED, self::SEVERITY_WARN) > $this->getThreshold(self::TYPE_FAILED, self::SEVERITY_FAIL);
     }
 
     /**
