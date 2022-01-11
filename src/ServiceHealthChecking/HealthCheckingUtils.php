@@ -28,8 +28,10 @@ class HealthCheckingUtils
                 continue;
             }
 
-            // Get the health check response
-            $response->addHealthCheckResponse($healthCheck->getResponse());
+            if ( ! $healthCheck->shouldSkip()) {
+                // Get the health check response
+                $response->addHealthCheckResponse($healthCheck->getResponse());
+            }
         }
 
         return $response;
