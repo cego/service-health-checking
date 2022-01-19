@@ -19,4 +19,16 @@ class ServiceHealthCheckingServiceProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
     }
+
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../publishable/service-health-checking.php', 'service-health-checking'
+        );
+    }
 }
