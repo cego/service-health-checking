@@ -5,6 +5,7 @@ namespace Cego\ServiceHealthChecking\Tests\Unit;
 use Cego\ServiceHealthChecking\Tests\TestCase;
 use Cego\ServiceHealthChecking\HealthStatusCode;
 use Cego\ServiceHealthChecking\ServiceHealthConfigCheck;
+use Illuminate\Support\Facades\Config;
 
 class ServiceHealthConfigCheckTest extends TestCase
 {
@@ -15,7 +16,7 @@ class ServiceHealthConfigCheckTest extends TestCase
         parent::setUp();
 
         $config = include __DIR__ . '/../../publishable/service-health-checking.php';
-        config(['service-health-checking' => $config]);
+        Config::set('service-health-checking', $config);
         $mock = $this->createPartialMock(ServiceHealthConfigCheck::class, ['shouldPerformRequestInsuranceConfigCheck']);
         $mock->expects($this->once())->method('shouldPerformRequestInsuranceConfigCheck')->willReturn(true);
         $this->mock = $mock;
@@ -37,7 +38,7 @@ class ServiceHealthConfigCheckTest extends TestCase
     public function it_fails_when_perform_check_is_not_boolean()
     {
         // Arrange
-        config(['service-health-checking.request-insurance.perform-check' => 'hest']);
+        Config::set('service-health-checking.request-insurance.perform-check', 'hest');
 
         // Act
         $response = $this->mock->getResponse();
@@ -50,7 +51,7 @@ class ServiceHealthConfigCheckTest extends TestCase
     public function it_fails_when_active_threshold_warn_is_not_integer()
     {
         // Arrange
-        config(['service-health-checking.request-insurance.active-thresholds.warn' => 'hest']);
+        Config::set('service-health-checking.request-insurance.active-thresholds.warn', 'hest');
 
         // Act
         $response = $this->mock->getResponse();
@@ -63,7 +64,7 @@ class ServiceHealthConfigCheckTest extends TestCase
     public function it_fails_when_active_threshold_fail_is_not_integer()
     {
         // Arrange
-        config(['service-health-checking.request-insurance.active-thresholds.fail' => 'hest']);
+        Config::set('service-health-checking.request-insurance.active-thresholds.fail', 'hest');
 
         // Act
         $response = $this->mock->getResponse();
@@ -76,7 +77,7 @@ class ServiceHealthConfigCheckTest extends TestCase
     public function it_fails_when_failed_threshold_warn_is_not_integer()
     {
         // Arrange
-        config(['service-health-checking.request-insurance.failed-thresholds.warn' => 'hest']);
+        Config::set('service-health-checking.request-insurance.failed-thresholds.warn', 'hest');
 
         // Act
         $response = $this->mock->getResponse();
@@ -89,7 +90,7 @@ class ServiceHealthConfigCheckTest extends TestCase
     public function it_fails_when_failed_threshold_fail_is_not_integer()
     {
         // Arrange
-        config(['service-health-checking.request-insurance.failed-thresholds.fail' => 'hest']);
+        Config::set('service-health-checking.request-insurance.failed-thresholds.fail', 'hest');
 
         // Act
         $response = $this->mock->getResponse();
@@ -102,7 +103,7 @@ class ServiceHealthConfigCheckTest extends TestCase
     public function it_fails_when_active_threshold_warn_is_negative()
     {
         // Arrange
-        config(['service-health-checking.request-insurance.active-thresholds.warn' => -1]);
+        Config::set('service-health-checking.request-insurance.active-thresholds.warn', -1);
 
         // Act
         $response = $this->mock->getResponse();
@@ -115,7 +116,7 @@ class ServiceHealthConfigCheckTest extends TestCase
     public function it_fails_when_active_threshold_fail_is_not_negative()
     {
         // Arrange
-        config(['service-health-checking.request-insurance.active-thresholds.fail' => -1]);
+        Config::set('service-health-checking.request-insurance.active-thresholds.fail', -1);
 
         // Act
         $response = $this->mock->getResponse();
@@ -128,7 +129,7 @@ class ServiceHealthConfigCheckTest extends TestCase
     public function it_fails_when_failed_threshold_warn_is_not_negative()
     {
         // Arrange
-        config(['service-health-checking.request-insurance.failed-thresholds.warn' => -1]);
+        Config::set('service-health-checking.request-insurance.failed-thresholds.warn', -1);
 
         // Act
         $response = $this->mock->getResponse();
@@ -141,7 +142,7 @@ class ServiceHealthConfigCheckTest extends TestCase
     public function it_fails_when_failed_threshold_fail_is_not_negative()
     {
         // Arrange
-        config(['service-health-checking.request-insurance.failed-thresholds.fail' => -1]);
+        Config::set('service-health-checking.request-insurance.failed-thresholds.fail', -1);
 
         // Act
         $response = $this->mock->getResponse();
@@ -154,8 +155,8 @@ class ServiceHealthConfigCheckTest extends TestCase
     public function it_fails_when_active_threshold_warn_is_greater_than_active_threshold_fail()
     {
         // Arrange
-        config(['service-health-checking.request-insurance.active-thresholds.fail' => 5]);
-        config(['service-health-checking.request-insurance.active-thresholds.warn' => 10]);
+        Config::set('service-health-checking.request-insurance.active-thresholds.fail', 5);
+        Config::set('service-health-checking.request-insurance.active-thresholds.warn', 10);
 
         // Act
         $response = $this->mock->getResponse();
@@ -168,8 +169,8 @@ class ServiceHealthConfigCheckTest extends TestCase
     public function it_fails_when_failed_threshold_warn_is_greater_than_failed_threshold_fail()
     {
         // Arrange
-        config(['service-health-checking.request-insurance.failed-thresholds.fail' => 5]);
-        config(['service-health-checking.request-insurance.failed-thresholds.warn' => 10]);
+        Config::set('service-health-checking.request-insurance.failed-thresholds.fail', 5);
+        Config::set('service-health-checking.request-insurance.failed-thresholds.warn', 10);
 
         // Act
         $response = $this->mock->getResponse();

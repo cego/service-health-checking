@@ -4,6 +4,7 @@ namespace Cego\ServiceHealthChecking;
 use Composer\InstalledVersions;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Config;
 
 class ServiceHealthConfigCheck extends BaseHealthCheck
 {
@@ -46,7 +47,7 @@ class ServiceHealthConfigCheck extends BaseHealthCheck
      */
     private function checkBaseConfig()
     {
-        if ( ! is_array(config('service-health-checking.registry'))) {
+        if ( ! is_array(Config::get('service-health-checking.registry'))) {
             $this->configIsOk = false;
             $this->errorMessages[] = 'registry must be an array';
         }
@@ -59,7 +60,7 @@ class ServiceHealthConfigCheck extends BaseHealthCheck
      */
     protected function shouldPerformRequestInsuranceConfigCheck(): bool
     {
-        return InstalledVersions::isInstalled('cego/request-insurance') && config('service-health-checking.request-insurance.perform-check');
+        return InstalledVersions::isInstalled('cego/request-insurance') && Config::get('service-health-checking.request-insurance.perform-check');
     }
 
     /**
@@ -73,7 +74,7 @@ class ServiceHealthConfigCheck extends BaseHealthCheck
             return;
         }
 
-        if ( ! is_bool(config('service-health-checking.request-insurance.perform-check'))) {
+        if ( ! is_bool(Config::get('service-health-checking.request-insurance.perform-check'))) {
             $this->configIsOk = false;
             $this->errorMessages[] = 'perform-check must be boolean';
         }
@@ -87,7 +88,7 @@ class ServiceHealthConfigCheck extends BaseHealthCheck
 
         foreach ($keysThatMustBePositiveIntegers as $key) {
             $fullKey = sprintf('service-health-checking.request-insurance.%s', $key);
-            $value = config($fullKey);
+            $value = Config::get($fullKey);
 
             if ( ! is_int($value) || $value < 0) {
                 $this->configIsOk = false;
@@ -142,6 +143,6 @@ class ServiceHealthConfigCheck extends BaseHealthCheck
     {
         $configKey = sprintf('service-health-checking.request-insurance.%s-thresholds.%s', $type, $severity);
 
-        return config($configKey);
+        return Config::get($configKey);
     }
 }

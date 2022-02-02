@@ -5,6 +5,7 @@ namespace Cego\ServiceHealthChecking\Tests\Unit;
 use Cego\ServiceHealthChecking\Tests\TestCase;
 use Cego\ServiceHealthChecking\HealthStatusCode;
 use Cego\ServiceHealthChecking\ActiveRequestInsurancesCheck;
+use Illuminate\Support\Facades\Config;
 
 class ActiveRequestInsurancesCheckTest extends TestCase
 {
@@ -14,8 +15,8 @@ class ActiveRequestInsurancesCheckTest extends TestCase
     {
         parent::setUp();
 
-        config(['service-health-checking.request-insurance.active-thresholds.warn' => 50]);
-        config(['service-health-checking.request-insurance.active-thresholds.fail' => 100]);
+        Config::set('service-health-checking.request-insurance.active-thresholds.warn', 50);
+        Config::set('service-health-checking.request-insurance.active-thresholds.fail', 100);
 
         $this->mock = $this->createPartialMock(ActiveRequestInsurancesCheck::class, ['getCount']);
     }
@@ -63,7 +64,7 @@ class ActiveRequestInsurancesCheckTest extends TestCase
     public function it_disables_warn()
     {
         // Arrange
-        config(['service-health-checking.request-insurance.active-thresholds.warn' => 0]);
+        Config::set('service-health-checking.request-insurance.active-thresholds.warn', 0);
         $this->mock->expects($this->once())->method('getCount')->willReturn(50);
 
         // Act
@@ -77,7 +78,7 @@ class ActiveRequestInsurancesCheckTest extends TestCase
     public function it_disables_fail()
     {
         // Arrange
-        config(['service-health-checking.request-insurance.active-thresholds.fail' => 0]);
+        Config::set('service-health-checking.request-insurance.active-thresholds.fail', 0);
         $this->mock->expects($this->once())->method('getCount')->willReturn(100);
 
         // Act

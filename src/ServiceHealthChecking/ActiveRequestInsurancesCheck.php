@@ -3,6 +3,7 @@ namespace Cego\ServiceHealthChecking;
 
 use Composer\InstalledVersions;
 use Cego\RequestInsurance\Models\RequestInsurance;
+use Illuminate\Support\Facades\Config;
 
 class ActiveRequestInsurancesCheck extends BaseHealthCheck
 {
@@ -19,7 +20,7 @@ class ActiveRequestInsurancesCheck extends BaseHealthCheck
      */
     public function shouldSkip(): bool
     {
-        return ! InstalledVersions::isInstalled('cego/request-insurance') || ! config('service-health-checking.request-insurance.perform-check');
+        return ! InstalledVersions::isInstalled('cego/request-insurance') || ! Config::get('service-health-checking.request-insurance.perform-check');
     }
 
     /**
@@ -43,8 +44,8 @@ class ActiveRequestInsurancesCheck extends BaseHealthCheck
     {
         $count = $this->getCount();
 
-        $warnThreshold = config('service-health-checking.request-insurance.active-thresholds.warn', 0);
-        $failThreshold = config('service-health-checking.request-insurance.active-thresholds.fail', 0);
+        $warnThreshold = Config::get('service-health-checking.request-insurance.active-thresholds.warn', 0);
+        $failThreshold = Config::get('service-health-checking.request-insurance.active-thresholds.fail', 0);
 
         if ($failThreshold != 0 && $count >= $failThreshold) {
             return HealthStatus::fail()->setMessage(sprintf('Active Request Insurances count: %s. Threshold: %s', $count, $failThreshold));

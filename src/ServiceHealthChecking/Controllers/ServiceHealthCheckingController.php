@@ -4,6 +4,7 @@ namespace Cego\ServiceHealthChecking\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Cego\ServiceHealthChecking\HealthCheckingUtils;
+use Illuminate\Support\Facades\Config;
 
 class ServiceHealthCheckingController extends Controller
 {
@@ -12,7 +13,7 @@ class ServiceHealthCheckingController extends Controller
      */
     public function index(): JsonResponse
     {
-        $healthResponse = HealthCheckingUtils::performChecks(config('service-health-checking.registry') ?? []);
+        $healthResponse = HealthCheckingUtils::performChecks(Config::get('service-health-checking.registry') ?? []);
 
         return response()->json($healthResponse->toArray());
     }
