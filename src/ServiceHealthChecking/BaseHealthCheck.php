@@ -25,6 +25,16 @@ abstract class BaseHealthCheck
     abstract protected function check(): HealthStatus;
 
     /**
+     * If this method returns true, the health check is skipped.
+     *
+     * @return bool
+     */
+    public function shouldSkip(): bool
+    {
+        return false;
+    }
+
+    /**
      * Gets the class name of the health check
      *
      * @return string
