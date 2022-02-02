@@ -3,6 +3,7 @@ namespace Cego\ServiceHealthChecking;
 
 use Composer\InstalledVersions;
 use Cego\RequestInsurance\Models\RequestInsurance;
+use Illuminate\Support\Facades\Config;
 
 class ActiveRequestInsurancesCheck extends BaseHealthCheck
 {

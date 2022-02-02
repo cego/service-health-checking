@@ -4,6 +4,7 @@ namespace Cego\ServiceHealthChecking\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Cego\ServiceHealthChecking\HealthCheckingUtils;
+use Illuminate\Support\Facades\Config;
 
 class ServiceHealthCheckingController extends Controller
 {
