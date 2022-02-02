@@ -5,7 +5,9 @@ namespace Cego\ServiceHealthChecking\Tests\Feature;
 use Cego\ServiceHealthChecking\Tests\TestCase;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheckFail;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheckPass;
+use Cego\ServiceHealthChecking\Tests\TestHealthCheckSkip;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheckWarn;
+use Illuminate\Support\Facades\Config;
 
 class ServiceHealthCheckingEndpointTest extends TestCase
 {
@@ -13,14 +15,14 @@ class ServiceHealthCheckingEndpointTest extends TestCase
     public function it_returns_correct_response_on_success()
     {
         // Arrange
-        config(['service-health-checking.registry' => [ TestHealthCheckPass::class ] ]);
+        Config::set('service-health-checking.registry', [ TestHealthCheckPass::class ] );
 
         // Act
         $response = $this->getJson(route('vendor.service-health-checking.index'));
 
         // Assert
         $response->assertStatus(200);
-        $response->assertJson([
+        $response->assertExactJson([
             'status' => 'pass',
             'checks' => [
                 [
@@ -37,14 +39,14 @@ class ServiceHealthCheckingEndpointTest extends TestCase
     public function it_returns_correct_response_on_warn()
     {
         // Arrange
-        config(['service-health-checking.registry' => [ TestHealthCheckWarn::class ] ]);
+        Config::set('service-health-checking.registry', [ TestHealthCheckWarn::class ] );
 
         // Act
         $response = $this->getJson(route('vendor.service-health-checking.index'));
 
         // Assert
         $response->assertStatus(200);
-        $response->assertJson([
+        $response->assertExactJson([
             'status' => 'warn',
             'checks' => [
                 [
@@ -61,14 +63,14 @@ class ServiceHealthCheckingEndpointTest extends TestCase
     public function it_returns_correct_response_on_failure()
     {
         // Arrange
-        config(['service-health-checking.registry' => [ TestHealthCheckFail::class ] ]);
+        Config::set('service-health-checking.registry', [ TestHealthCheckFail::class ] );
 
         // Act
         $response = $this->getJson(route('vendor.service-health-checking.index'));
 
         // Assert
         $response->assertStatus(200);
-        $response->assertJson([
+        $response->assertExactJson([
             'status' => 'fail',
             'checks' => [
                 [
@@ -78,6 +80,23 @@ class ServiceHealthCheckingEndpointTest extends TestCase
                     'message'     => 'It failed',
                 ],
             ],
+        ]);
+    }
+
+    /** @test */
+    public function it_skips()
+    {
+        // Arrange
+        Config::set('service-health-checking.registry', [ TestHealthCheckSkip::class ] );
+
+        // Act
+        $response = $this->getJson(route('vendor.service-health-checking.index'));
+
+        // Assert
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'status' => 'pass',
+            'checks' => [],
         ]);
     }
 }
