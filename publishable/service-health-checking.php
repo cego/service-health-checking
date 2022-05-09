@@ -16,7 +16,7 @@ return [
         // When active RIs cross these thresholds, the check will warn or fail. 0 = disable.
         'active-thresholds' => [
             'warn' => 50,
-            'fail' => 0,
+            'fail' => 1000,
         ],
         // When failed RIs cross these thresholds, the check will warn or fail. 0 = disable.
         'failed-thresholds' => [
