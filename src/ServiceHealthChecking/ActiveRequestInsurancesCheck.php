@@ -2,8 +2,9 @@
 namespace Cego\ServiceHealthChecking;
 
 use Composer\InstalledVersions;
-use Cego\RequestInsurance\Models\RequestInsurance;
 use Illuminate\Support\Facades\Config;
+use Composer\Package\Version\VersionParser;
+use Cego\RequestInsurance\Models\RequestInsurance;
 
 class ActiveRequestInsurancesCheck extends BaseHealthCheck
 {
@@ -20,7 +21,8 @@ class ActiveRequestInsurancesCheck extends BaseHealthCheck
      */
     public function shouldSkip(): bool
     {
-        return ! InstalledVersions::isInstalled('cego/request-insurance') || ! Config::get('service-health-checking.request-insurance.perform-check');
+        // Health check requires at least version 0.11.4
+        return InstalledVersions::satisfies(new VersionParser(), 'cego/request-insurance', '<0.11.4') || ! Config::get('service-health-checking.request-insurance.perform-check');
     }
 
     /**

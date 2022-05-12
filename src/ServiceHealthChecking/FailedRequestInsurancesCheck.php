@@ -2,8 +2,10 @@
 namespace Cego\ServiceHealthChecking;
 
 use Composer\InstalledVersions;
-use Cego\RequestInsurance\Models\RequestInsurance;
+use Cego\RequestInsurance\Enums\State;
 use Illuminate\Support\Facades\Config;
+use Composer\Package\Version\VersionParser;
+use Cego\RequestInsurance\Models\RequestInsurance;
 
 class FailedRequestInsurancesCheck extends BaseHealthCheck
 {
@@ -20,7 +22,8 @@ class FailedRequestInsurancesCheck extends BaseHealthCheck
      */
     public function shouldSkip(): bool
     {
-        return ! InstalledVersions::isInstalled('cego/request-insurance') || ! Config::get('service-health-checking.request-insurance.perform-check');
+        // Health check requires at least version 0.11.4
+        return InstalledVersions::satisfies(new VersionParser(), 'cego/request-insurance', '<0.11.4') || ! Config::get('service-health-checking.request-insurance.perform-check');
     }
 
     /**
@@ -31,10 +34,7 @@ class FailedRequestInsurancesCheck extends BaseHealthCheck
     protected function getCount(): int
     {
         /** @phpstan-ignore-next-line  */
-        return RequestInsurance::whereNull('abandoned_at')
-            ->whereNull('completed_at')
-            ->whereNotNull('paused_at')
-            ->count();
+        return RequestInsurance::query()->where('state', State::FAILED)->count();
     }
 
     /**
