@@ -4,7 +4,6 @@ namespace Cego\ServiceHealthChecking;
 use Composer\InstalledVersions;
 use Cego\RequestInsurance\Enums\State;
 use Illuminate\Support\Facades\Config;
-use Composer\Package\Version\VersionParser;
 use Cego\RequestInsurance\Models\RequestInsurance;
 
 class FailedRequestInsurancesCheck extends BaseHealthCheck
