@@ -22,8 +22,7 @@ class FailedRequestInsurancesCheck extends BaseHealthCheck
      */
     public function shouldSkip(): bool
     {
-        // Health check requires at least version 0.11.4
-        return InstalledVersions::satisfies(new VersionParser(), 'cego/request-insurance', '<0.11.4') || ! Config::get('service-health-checking.request-insurance.perform-check');
+        return ! InstalledVersions::isInstalled('cego/request-insurance') || ! Config::get('service-health-checking.request-insurance.perform-check');
     }
 
     /**
