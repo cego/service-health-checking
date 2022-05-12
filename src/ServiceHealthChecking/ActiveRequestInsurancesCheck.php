@@ -3,6 +3,7 @@ namespace Cego\ServiceHealthChecking;
 
 use Composer\InstalledVersions;
 use Illuminate\Support\Facades\Config;
+use Cego\RequestInsurance\Enums\State;
 use Cego\RequestInsurance\Models\RequestInsurance;
 
 class ActiveRequestInsurancesCheck extends BaseHealthCheck
@@ -31,10 +32,7 @@ class ActiveRequestInsurancesCheck extends BaseHealthCheck
     protected function getCount(): int
     {
         /** @phpstan-ignore-next-line  */
-        return RequestInsurance::where('completed_at', null)
-            ->where('abandoned_at', null)
-            ->where('paused_at', null)
-            ->count();
+        return RequestInsurance::query()->whereIn('state', [State::READY, State::WAITING, State::PENDING, State::PROCESSING])->count();
     }
 
     /**
