@@ -3,8 +3,8 @@ namespace Cego\ServiceHealthChecking;
 
 use Composer\InstalledVersions;
 use Illuminate\Config\Repository;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Contracts\Foundation\Application;
 
 class ServiceHealthConfigCheck extends BaseHealthCheck
 {

@@ -2,10 +2,10 @@
 
 namespace Cego\ServiceHealthChecking\Tests\Unit;
 
+use Illuminate\Support\Facades\Config;
 use Cego\ServiceHealthChecking\Tests\TestCase;
 use Cego\ServiceHealthChecking\HealthStatusCode;
 use Cego\ServiceHealthChecking\ServiceHealthConfigCheck;
-use Illuminate\Support\Facades\Config;
 
 class ServiceHealthConfigCheckTest extends TestCase
 {

@@ -2,12 +2,12 @@
 
 namespace Cego\ServiceHealthChecking\Tests\Feature;
 
+use Illuminate\Support\Facades\Config;
 use Cego\ServiceHealthChecking\Tests\TestCase;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheckFail;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheckPass;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheckSkip;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheckWarn;
-use Illuminate\Support\Facades\Config;
 
 class ServiceHealthCheckingEndpointTest extends TestCase
 {
@@ -15,7 +15,7 @@ class ServiceHealthCheckingEndpointTest extends TestCase
     public function it_returns_correct_response_on_success()
     {
         // Arrange
-        Config::set('service-health-checking.registry', [ TestHealthCheckPass::class ] );
+        Config::set('service-health-checking.registry', [ TestHealthCheckPass::class ]);
 
         // Act
         $response = $this->getJson(route('vendor.service-health-checking.index'));
@@ -39,7 +39,7 @@ class ServiceHealthCheckingEndpointTest extends TestCase
     public function it_returns_correct_response_on_warn()
     {
         // Arrange
-        Config::set('service-health-checking.registry', [ TestHealthCheckWarn::class ] );
+        Config::set('service-health-checking.registry', [ TestHealthCheckWarn::class ]);
 
         // Act
         $response = $this->getJson(route('vendor.service-health-checking.index'));
@@ -63,7 +63,7 @@ class ServiceHealthCheckingEndpointTest extends TestCase
     public function it_returns_correct_response_on_failure()
     {
         // Arrange
-        Config::set('service-health-checking.registry', [ TestHealthCheckFail::class ] );
+        Config::set('service-health-checking.registry', [ TestHealthCheckFail::class ]);
 
         // Act
         $response = $this->getJson(route('vendor.service-health-checking.index'));
@@ -87,7 +87,7 @@ class ServiceHealthCheckingEndpointTest extends TestCase
     public function it_skips()
     {
         // Arrange
-        Config::set('service-health-checking.registry', [ TestHealthCheckSkip::class ] );
+        Config::set('service-health-checking.registry', [ TestHealthCheckSkip::class ]);
 
         // Act
         $response = $this->getJson(route('vendor.service-health-checking.index'));

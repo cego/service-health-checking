@@ -3,8 +3,8 @@
 namespace Cego\ServiceHealthChecking\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use Cego\ServiceHealthChecking\HealthCheckingUtils;
 use Illuminate\Support\Facades\Config;
+use Cego\ServiceHealthChecking\HealthCheckingUtils;
 
 class ServiceHealthCheckingController extends Controller
 {
