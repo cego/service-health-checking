@@ -2,6 +2,7 @@
 
 namespace Cego\ServiceHealthChecking;
 
+use Exception;
 use ReflectionClass;
 
 abstract class BaseHealthCheck
@@ -51,6 +52,15 @@ abstract class BaseHealthCheck
      */
     final public function getResponse(): HealthCheckResponse
     {
-        return new HealthCheckResponse($this->check(), $this->getName(), $this->getDescription());
+        $description = '';
+
+        try {
+            $description = $this->getDescription();
+            $status = $this->check();
+        } catch (Exception $exception) {
+            $status = HealthStatus::fail()->setMessage($exception);
+        }
+
+        return new HealthCheckResponse($status, $this->getName(), $description);
     }
 }
