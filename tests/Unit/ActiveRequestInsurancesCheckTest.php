@@ -32,6 +32,7 @@ class ActiveRequestInsurancesCheckTest extends TestCase
 
         // Assert
         $this->assertEquals(HealthStatusCode::PASS, $response->getStatus()->getStatusCode());
+        $this->assertEquals('Active Request Insurances count: 0. Warn threshold: 50, fail threshold: 100.', $response->getStatus()->getMessage());
     }
 
     /** @test */
@@ -45,6 +46,7 @@ class ActiveRequestInsurancesCheckTest extends TestCase
 
         // Assert
         $this->assertEquals(HealthStatusCode::WARN, $response->getStatus()->getStatusCode());
+        $this->assertEquals('Active Request Insurances count: 50. Warn threshold: 50, fail threshold: 100.', $response->getStatus()->getMessage());
     }
 
     /** @test */
@@ -58,6 +60,7 @@ class ActiveRequestInsurancesCheckTest extends TestCase
 
         // Assert
         $this->assertEquals(HealthStatusCode::FAIL, $response->getStatus()->getStatusCode());
+        $this->assertEquals('Active Request Insurances count: 100. Warn threshold: 50, fail threshold: 100.', $response->getStatus()->getMessage());
     }
 
     /** @test */
@@ -72,6 +75,7 @@ class ActiveRequestInsurancesCheckTest extends TestCase
 
         // Assert
         $this->assertEquals(HealthStatusCode::PASS, $response->getStatus()->getStatusCode());
+        $this->assertEquals('Active Request Insurances count: 50. Warn threshold: disabled, fail threshold: 100.', $response->getStatus()->getMessage());
     }
 
     /** @test */
@@ -86,5 +90,6 @@ class ActiveRequestInsurancesCheckTest extends TestCase
 
         // Assert
         $this->assertEquals(HealthStatusCode::WARN, $response->getStatus()->getStatusCode());
+        $this->assertEquals('Active Request Insurances count: 100. Warn threshold: 50, fail threshold: disabled.', $response->getStatus()->getMessage());
     }
 }

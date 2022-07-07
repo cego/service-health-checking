@@ -45,14 +45,20 @@ class ActiveRequestInsurancesCheck extends BaseHealthCheck
         $warnThreshold = Config::get('service-health-checking.request-insurance.active-thresholds.warn', 0);
         $failThreshold = Config::get('service-health-checking.request-insurance.active-thresholds.fail', 0);
 
-        if ($failThreshold != 0 && $count >= $failThreshold) {
-            return HealthStatus::fail()->setMessage(sprintf('Active Request Insurances count: %s. Threshold: %s', $count, $failThreshold));
-        }
+        $status = HealthStatus::pass();
 
         if ($warnThreshold != 0 && $count >= $warnThreshold) {
-            return HealthStatus::warn()->setMessage(sprintf('Active Request Insurances count: %s. Threshold: %s', $count, $warnThreshold));
+            $status->setStatusWarning();
         }
 
-        return HealthStatus::pass();
+        if ($failThreshold != 0 && $count >= $failThreshold) {
+            $status->setStatusFail();
+        }
+
+        return $status->setMessage(sprintf('Active Request Insurances count: %s. Warn threshold: %s, fail threshold: %s.',
+            $count,
+            $warnThreshold == 0 ? 'disabled' : $warnThreshold,
+            $failThreshold == 0 ? 'disabled' : $failThreshold
+        ));
     }
 }
