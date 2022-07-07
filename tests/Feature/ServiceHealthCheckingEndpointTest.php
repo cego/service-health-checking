@@ -8,6 +8,7 @@ use Cego\ServiceHealthChecking\Tests\TestHealthCheckFail;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheckPass;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheckSkip;
 use Cego\ServiceHealthChecking\Tests\TestHealthCheckWarn;
+use Cego\ServiceHealthChecking\Tests\TestHealthCheckException;
 
 class ServiceHealthCheckingEndpointTest extends TestCase
 {
@@ -98,5 +99,30 @@ class ServiceHealthCheckingEndpointTest extends TestCase
             'status' => 'pass',
             'checks' => [],
         ]);
+    }
+
+    /** @test */
+    public function it_handles_exception()
+    {
+        // Arrange
+        Config::set('service-health-checking.registry', [ TestHealthCheckException::class ]);
+
+        // Act
+        $response = $this->getJson(route('vendor.service-health-checking.index'));
+
+        // Assert
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'fail',
+            'checks' => [
+                [
+                    'status'      => 'fail',
+                    'name'        => 'TestHealthCheckException',
+                    'description' => 'This is a test health check that throws an exception',
+                ],
+            ],
+        ]);
+
+        $this->assertStringStartsWith('Exception: Oh no...', json_decode($response->getContent(), true)['checks'][0]['message']);
     }
 }
