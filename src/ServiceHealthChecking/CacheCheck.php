@@ -2,6 +2,7 @@
 namespace Cego\ServiceHealthChecking;
 
 use Exception;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 
 class CacheCheck extends BaseHealthCheck
@@ -20,9 +21,11 @@ class CacheCheck extends BaseHealthCheck
     protected function check(): HealthStatus
     {
         try {
-            Cache::put('CACHE_CHECK', true);
+            $key = 'CACHE_CHECK.' . Str::random();
 
-            return Cache::pull('CACHE_CHECK', false) === true
+            Cache::put($key, true);
+
+            return Cache::pull($key, false) === true
                 ? HealthStatus::pass()
                 : HealthStatus::fail()->setMessage('Could not read from cache');
         } catch (Exception $exception) {
