@@ -1,4 +1,5 @@
 <?php
+
 namespace Cego\ServiceHealthChecking;
 
 use Composer\InstalledVersions;
@@ -8,11 +9,11 @@ use Illuminate\Contracts\Foundation\Application;
 
 class ServiceHealthConfigCheck extends BaseHealthCheck
 {
-    const TYPE_FAILED = 'failed';
-    const TYPE_ACTIVE = 'active';
+    public const TYPE_FAILED = 'failed';
+    public const TYPE_ACTIVE = 'active';
 
-    const SEVERITY_WARN = 'warn';
-    const SEVERITY_FAIL = 'fail';
+    public const SEVERITY_WARN = 'warn';
+    public const SEVERITY_FAIL = 'fail';
 
     private array $errorMessages = [];
     private bool $configIsOk = true;

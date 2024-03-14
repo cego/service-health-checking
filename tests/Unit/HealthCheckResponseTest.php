@@ -8,8 +8,7 @@ use Cego\ServiceHealthChecking\HealthCheckResponse;
 
 class HealthCheckResponseTest extends TestCase
 {
-    /** @test */
-    public function it_converts_to_array()
+    public function test_it_converts_to_array()
     {
         // Arrange
         $healthCheckResponse = new HealthCheckResponse(

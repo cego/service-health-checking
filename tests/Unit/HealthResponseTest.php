@@ -9,8 +9,7 @@ use Cego\ServiceHealthChecking\HealthCheckResponse;
 
 class HealthResponseTest extends TestCase
 {
-    /** @test */
-    public function it_converts_to_json()
+    public function test_it_converts_to_json()
     {
         // Arrange
         $healthResponse = new HealthResponse();
@@ -40,8 +39,7 @@ class HealthResponseTest extends TestCase
         ], $array);
     }
 
-    /** @test */
-    public function the_status_matches_the_check_statuses()
+    public function test_the_status_matches_the_check_statuses()
     {
         $healthResponse = new HealthResponse();
         $this->assertEquals('pass', $healthResponse->getStatus()->getText());

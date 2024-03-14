@@ -7,8 +7,7 @@ use Cego\ServiceHealthChecking\Tests\TestCase;
 
 class HealthStatusTest extends TestCase
 {
-    /** @test */
-    public function it_can_instantiates_pass()
+    public function test_it_can_instantiates_pass()
     {
         // Arrange / act
         $status = HealthStatus::pass();
@@ -17,8 +16,7 @@ class HealthStatusTest extends TestCase
         $this->assertEquals('pass', $status->getText());
     }
 
-    /** @test */
-    public function it_can_instantiates_warn()
+    public function test_it_can_instantiates_warn()
     {
         // Arrange / act
         $status = HealthStatus::warn();
@@ -27,8 +25,7 @@ class HealthStatusTest extends TestCase
         $this->assertEquals('warn', $status->getText());
     }
 
-    /** @test */
-    public function it_can_instantiates_fail()
+    public function test_it_can_instantiates_fail()
     {
         // Arrange / act
         $status = HealthStatus::fail();
@@ -37,16 +34,14 @@ class HealthStatusTest extends TestCase
         $this->assertEquals('fail', $status->getText());
     }
 
-    /** @test */
-    public function it_upshifts_status()
+    public function test_it_upshifts_status()
     {
         $this->assertEquals('warn', HealthStatus::pass()->setStatusIfWorse(HealthStatus::warn())->getText());
         $this->assertEquals('fail', HealthStatus::pass()->setStatusIfWorse(HealthStatus::fail())->getText());
         $this->assertEquals('fail', HealthStatus::warn()->setStatusIfWorse(HealthStatus::fail())->getText());
     }
 
-    /** @test */
-    public function it_doesnt_downshift_status()
+    public function test_it_doesnt_downshift_status()
     {
         $this->assertEquals('fail', HealthStatus::fail()->setStatusIfWorse(HealthStatus::pass())->getText());
         $this->assertEquals('fail', HealthStatus::fail()->setStatusIfWorse(HealthStatus::warn())->getText());

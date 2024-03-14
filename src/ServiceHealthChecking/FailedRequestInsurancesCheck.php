@@ -1,4 +1,5 @@
 <?php
+
 namespace Cego\ServiceHealthChecking;
 
 use Composer\InstalledVersions;

@@ -21,8 +21,7 @@ class ActiveRequestInsurancesCheckTest extends TestCase
         $this->mock = $this->createPartialMock(ActiveRequestInsurancesCheck::class, ['getCount']);
     }
 
-    /** @test */
-    public function it_passes()
+    public function test_it_passes()
     {
         // Arrange
         $this->mock->expects($this->once())->method('getCount')->willReturn(0);
@@ -35,8 +34,7 @@ class ActiveRequestInsurancesCheckTest extends TestCase
         $this->assertEquals('Active Request Insurances count: 0. Warn threshold: 50, fail threshold: 100.', $response->getStatus()->getMessage());
     }
 
-    /** @test */
-    public function it_warns()
+    public function test_it_warns()
     {
         // Arrange
         $this->mock->expects($this->once())->method('getCount')->willReturn(50);
@@ -49,8 +47,7 @@ class ActiveRequestInsurancesCheckTest extends TestCase
         $this->assertEquals('Active Request Insurances count: 50. Warn threshold: 50, fail threshold: 100.', $response->getStatus()->getMessage());
     }
 
-    /** @test */
-    public function it_fails()
+    public function test_it_fails()
     {
         // Arrange
         $this->mock->expects($this->once())->method('getCount')->willReturn(100);
@@ -63,8 +60,7 @@ class ActiveRequestInsurancesCheckTest extends TestCase
         $this->assertEquals('Active Request Insurances count: 100. Warn threshold: 50, fail threshold: 100.', $response->getStatus()->getMessage());
     }
 
-    /** @test */
-    public function it_disables_warn()
+    public function test_it_disables_warn()
     {
         // Arrange
         Config::set('service-health-checking.request-insurance.active-thresholds.warn', 0);
@@ -78,8 +74,7 @@ class ActiveRequestInsurancesCheckTest extends TestCase
         $this->assertEquals('Active Request Insurances count: 50. Warn threshold: disabled, fail threshold: 100.', $response->getStatus()->getMessage());
     }
 
-    /** @test */
-    public function it_disables_fail()
+    public function test_it_disables_fail()
     {
         // Arrange
         Config::set('service-health-checking.request-insurance.active-thresholds.fail', 0);

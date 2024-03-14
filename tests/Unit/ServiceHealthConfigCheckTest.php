@@ -22,8 +22,7 @@ class ServiceHealthConfigCheckTest extends TestCase
         $this->mock = $mock;
     }
 
-    /** @test */
-    public function it_accepts_default_config()
+    public function test_it_accepts_default_config()
     {
         // Arrange
 
@@ -34,8 +33,7 @@ class ServiceHealthConfigCheckTest extends TestCase
         $this->assertEquals(HealthStatusCode::PASS, $response->getStatus()->getStatusCode());
     }
 
-    /** @test */
-    public function it_fails_when_perform_check_is_not_boolean()
+    public function test_it_fails_when_perform_check_is_not_boolean()
     {
         // Arrange
         Config::set('service-health-checking.request-insurance.perform-check', 'hest');
@@ -47,8 +45,7 @@ class ServiceHealthConfigCheckTest extends TestCase
         $this->assertEquals(HealthStatusCode::FAIL, $response->getStatus()->getStatusCode());
     }
 
-    /** @test */
-    public function it_fails_when_active_threshold_warn_is_not_integer()
+    public function test_it_fails_when_active_threshold_warn_is_not_integer()
     {
         // Arrange
         Config::set('service-health-checking.request-insurance.active-thresholds.warn', 'hest');
@@ -60,8 +57,7 @@ class ServiceHealthConfigCheckTest extends TestCase
         $this->assertEquals(HealthStatusCode::FAIL, $response->getStatus()->getStatusCode());
     }
 
-    /** @test */
-    public function it_fails_when_active_threshold_fail_is_not_integer()
+    public function test_it_fails_when_active_threshold_fail_is_not_integer()
     {
         // Arrange
         Config::set('service-health-checking.request-insurance.active-thresholds.fail', 'hest');
@@ -73,8 +69,7 @@ class ServiceHealthConfigCheckTest extends TestCase
         $this->assertEquals(HealthStatusCode::FAIL, $response->getStatus()->getStatusCode());
     }
 
-    /** @test */
-    public function it_fails_when_failed_threshold_warn_is_not_integer()
+    public function test_it_fails_when_failed_threshold_warn_is_not_integer()
     {
         // Arrange
         Config::set('service-health-checking.request-insurance.failed-thresholds.warn', 'hest');
@@ -86,8 +81,7 @@ class ServiceHealthConfigCheckTest extends TestCase
         $this->assertEquals(HealthStatusCode::FAIL, $response->getStatus()->getStatusCode());
     }
 
-    /** @test */
-    public function it_fails_when_failed_threshold_fail_is_not_integer()
+    public function test_it_fails_when_failed_threshold_fail_is_not_integer()
     {
         // Arrange
         Config::set('service-health-checking.request-insurance.failed-thresholds.fail', 'hest');
@@ -99,8 +93,7 @@ class ServiceHealthConfigCheckTest extends TestCase
         $this->assertEquals(HealthStatusCode::FAIL, $response->getStatus()->getStatusCode());
     }
 
-    /** @test */
-    public function it_fails_when_active_threshold_warn_is_negative()
+    public function test_it_fails_when_active_threshold_warn_is_negative()
     {
         // Arrange
         Config::set('service-health-checking.request-insurance.active-thresholds.warn', -1);
@@ -112,8 +105,7 @@ class ServiceHealthConfigCheckTest extends TestCase
         $this->assertEquals(HealthStatusCode::FAIL, $response->getStatus()->getStatusCode());
     }
 
-    /** @test */
-    public function it_fails_when_active_threshold_fail_is_not_negative()
+    public function test_it_fails_when_active_threshold_fail_is_not_negative()
     {
         // Arrange
         Config::set('service-health-checking.request-insurance.active-thresholds.fail', -1);
@@ -125,8 +117,7 @@ class ServiceHealthConfigCheckTest extends TestCase
         $this->assertEquals(HealthStatusCode::FAIL, $response->getStatus()->getStatusCode());
     }
 
-    /** @test */
-    public function it_fails_when_failed_threshold_warn_is_not_negative()
+    public function test_it_fails_when_failed_threshold_warn_is_not_negative()
     {
         // Arrange
         Config::set('service-health-checking.request-insurance.failed-thresholds.warn', -1);
@@ -138,8 +129,7 @@ class ServiceHealthConfigCheckTest extends TestCase
         $this->assertEquals(HealthStatusCode::FAIL, $response->getStatus()->getStatusCode());
     }
 
-    /** @test */
-    public function it_fails_when_failed_threshold_fail_is_not_negative()
+    public function test_it_fails_when_failed_threshold_fail_is_not_negative()
     {
         // Arrange
         Config::set('service-health-checking.request-insurance.failed-thresholds.fail', -1);
@@ -151,8 +141,7 @@ class ServiceHealthConfigCheckTest extends TestCase
         $this->assertEquals(HealthStatusCode::FAIL, $response->getStatus()->getStatusCode());
     }
 
-    /** @test */
-    public function it_fails_when_active_threshold_warn_is_greater_than_active_threshold_fail()
+    public function test_it_fails_when_active_threshold_warn_is_greater_than_active_threshold_fail()
     {
         // Arrange
         Config::set('service-health-checking.request-insurance.active-thresholds.fail', 5);
@@ -165,8 +154,7 @@ class ServiceHealthConfigCheckTest extends TestCase
         $this->assertEquals(HealthStatusCode::FAIL, $response->getStatus()->getStatusCode());
     }
 
-    /** @test */
-    public function it_fails_when_failed_threshold_warn_is_greater_than_failed_threshold_fail()
+    public function test_it_fails_when_failed_threshold_warn_is_greater_than_failed_threshold_fail()
     {
         // Arrange
         Config::set('service-health-checking.request-insurance.failed-thresholds.fail', 5);

@@ -12,8 +12,7 @@ use Cego\ServiceHealthChecking\Tests\TestHealthCheckException;
 
 class ServiceHealthCheckingEndpointTest extends TestCase
 {
-    /** @test */
-    public function it_returns_correct_response_on_success()
+    public function test_it_returns_correct_response_on_success()
     {
         // Arrange
         Config::set('service-health-checking.registry', [ TestHealthCheckPass::class ]);
@@ -36,8 +35,7 @@ class ServiceHealthCheckingEndpointTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function it_returns_correct_response_on_warn()
+    public function test_it_returns_correct_response_on_warn()
     {
         // Arrange
         Config::set('service-health-checking.registry', [ TestHealthCheckWarn::class ]);
@@ -60,8 +58,7 @@ class ServiceHealthCheckingEndpointTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function it_returns_correct_response_on_failure()
+    public function test_it_returns_correct_response_on_failure()
     {
         // Arrange
         Config::set('service-health-checking.registry', [ TestHealthCheckFail::class ]);
@@ -84,8 +81,7 @@ class ServiceHealthCheckingEndpointTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function it_skips()
+    public function test_it_skips()
     {
         // Arrange
         Config::set('service-health-checking.registry', [ TestHealthCheckSkip::class ]);
@@ -101,8 +97,7 @@ class ServiceHealthCheckingEndpointTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function it_handles_exception()
+    public function test_it_handles_exception()
     {
         // Arrange
         Config::set('service-health-checking.registry', [ TestHealthCheckException::class ]);

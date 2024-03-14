@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use Cego\ServiceHealthChecking\Controllers\ServiceHealthCheckingController;
 
