@@ -22,7 +22,7 @@
     "orchestra/testbench": "^9.0",
     "cego/php-cs-fixer": "^2.0.0",
     "cego/phpstan": "^2.0.0",
-    "cego/request-insurance": "dev-lejo/support-laravel-11"
+    "cego/request-insurance": "^1.0.0"
   },
   "autoload": {
     "psr-4": {
