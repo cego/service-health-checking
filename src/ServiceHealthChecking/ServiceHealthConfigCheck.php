@@ -15,6 +15,9 @@ class ServiceHealthConfigCheck extends BaseHealthCheck
     public const SEVERITY_WARN = 'warn';
     public const SEVERITY_FAIL = 'fail';
 
+    /**
+     * @var string[]
+     */
     private array $errorMessages = [];
     private bool $configIsOk = true;
 

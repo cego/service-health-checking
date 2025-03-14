@@ -32,7 +32,6 @@ class ActiveRequestInsurancesCheck extends BaseHealthCheck
      */
     protected function getCount(): int
     {
-        /** @phpstan-ignore-next-line  */
         return RequestInsurance::query()->whereIn('state', [State::READY, State::WAITING, State::PENDING, State::PROCESSING])->count();
     }
 

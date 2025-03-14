@@ -4,6 +4,9 @@ namespace Cego\ServiceHealthChecking;
 
 use Illuminate\Contracts\Support\Arrayable;
 
+/**
+ * @implements Arrayable<array-key, mixed>
+ */
 class HealthResponse implements Arrayable
 {
     /**

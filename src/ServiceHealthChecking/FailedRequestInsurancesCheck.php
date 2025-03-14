@@ -32,7 +32,6 @@ class FailedRequestInsurancesCheck extends BaseHealthCheck
      */
     protected function getCount(): int
     {
-        /** @phpstan-ignore-next-line  */
         return RequestInsurance::query()->where('state', State::FAILED)->count();
     }
 

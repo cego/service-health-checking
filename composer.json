@@ -13,16 +13,16 @@
   ],
   "require": {
     "php": "^7.4|^8.0",
-    "illuminate/http": "^7.0|^8.0|^9.0|^10.0|^11.0",
-    "illuminate/support": "^7.0|^8.0|^9.0|^10.0|^11.0",
+    "illuminate/http": "^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
+    "illuminate/support": "^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
     "ext-json": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^11.0",
-    "orchestra/testbench": "^9.0",
+    "orchestra/testbench": "^10.0",
     "cego/php-cs-fixer": "^2.0.0",
-    "cego/phpstan": "^2.0.0",
-    "cego/request-insurance": "^1.0.0"
+    "cego/phpstan": "^4.0.0",
+    "cego/request-insurance": "^3.0.0"
   },
   "autoload": {
     "psr-4": {
