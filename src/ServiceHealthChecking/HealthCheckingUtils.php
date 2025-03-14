@@ -6,13 +6,14 @@ class HealthCheckingUtils
 {
     /**
      * Performs health checks
+     * @param string[] $healthCheckClasses
+     * @return HealthResponse
      */
     public static function performChecks(array $healthCheckClasses): HealthResponse
     {
         $response = new HealthResponse();
 
         foreach ($healthCheckClasses as $healthCheckClass) {
-            /** @var BaseHealthCheck $healthCheck */
             $healthCheck = resolve($healthCheckClass);
 
             // Ensure that we extend BaseHealthCheck
