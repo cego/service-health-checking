@@ -6,8 +6,6 @@ return [
         \Cego\ServiceHealthChecking\ServiceHealthConfigCheck::class,
         \Cego\ServiceHealthChecking\DefaultDatabaseConnectionCheck::class,
         \Cego\ServiceHealthChecking\CacheCheck::class,
-        \Cego\ServiceHealthChecking\FailedRequestInsurancesCheck::class,
-        \Cego\ServiceHealthChecking\ActiveRequestInsurancesCheck::class,
     ],
     // Define the thresholds for request insurance health levels
     'request-insurance' => [
