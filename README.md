@@ -31,5 +31,16 @@ Firstly, publish the package assets by running:
 php artisan vendor:publish --provider="Cego\ServiceHealthChecking\ServiceHealthCheckingServiceProvider"
 ```
 The package will publish a config file, `service-health-checking.php`, in which health check classes must be 
-registered, in order for them to run. The package is shipped with a basic database connection check, which is registered 
-by default.
+registered, in order for them to run. A published config replaces the default registry entirely. A registry entry
+that cannot be resolved is reported as a failing check.
+
+## Bundled health checks
+| Check | Default registry | Purpose |
+|---|---|---|
+| `DefaultDatabaseConnectionCheck` | registered | Checks that a connection to the default database can be established |
+| `CacheCheck` | opt-in | Checks read/write access to the cache |
+
+## Upgrading to 2.0
+- `ActiveRequestInsurancesCheck`, `FailedRequestInsurancesCheck` and `ServiceHealthConfigCheck` have been removed.
+  Remove them, and the `request-insurance` section, from your published `config/service-health-checking.php`.
+- `CacheCheck` is no longer registered by default. Add it to your registry if you want to keep running it.
