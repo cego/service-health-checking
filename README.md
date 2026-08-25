@@ -31,5 +31,26 @@ Firstly, publish the package assets by running:
 php artisan vendor:publish --provider="Cego\ServiceHealthChecking\ServiceHealthCheckingServiceProvider"
 ```
 The package will publish a config file, `service-health-checking.php`, in which health check classes must be 
-registered, in order for them to run. The package is shipped with a basic database connection check, which is registered 
-by default.
+registered, in order for them to run. Services that do not publish the config run the default registry listed below.
+A published config replaces the default `registry` entirely, so changes to the package defaults never reach a service
+that has published the config.
+
+A registry entry that cannot be resolved (e.g. a class that has been removed) is reported as a failing check instead
+of breaking the endpoint. The service still reports `fail`, so uptime monitoring will flag it as down until the entry
+is removed.
+
+## Bundled health checks
+| Check | Default registry | Purpose |
+|---|---|---|
+| `DefaultDatabaseConnectionCheck` | registered | Verifies that a connection to the default database can be established |
+| `CacheCheck` | opt-in | Writes and reads back a random cache key. Redundant when the cache driver is `database`, so register it only when the cache is a separate system (e.g. Redis) |
+
+## Upgrading to 2.0
+- `ActiveRequestInsurancesCheck`, `FailedRequestInsurancesCheck` and `ServiceHealthConfigCheck` have been removed,
+  along with the `request-insurance` config section. Request insurance backlogs are monitored through Prometheus
+  instead, and the config check had nothing left to detect. Remove the three classes from your published
+  `config/service-health-checking.php` in the same change as the version bump: the endpoint stays up, but each stale
+  entry is reported as a failing check, which marks the service down in uptime monitoring.
+- `CacheCheck` is no longer registered by default. This only affects services that have not published the config;
+  a published registry keeps running whatever it lists. Register `CacheCheck` explicitly if the service relies on
+  a cache that is not backed by the default database.
