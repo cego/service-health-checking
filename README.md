@@ -19,6 +19,18 @@ returns `200 OK` and a body with a JSON data object with the following format:
 ```
 The `checks` array contains an entry for each registered health check.
 
+## Authorization
+
+The endpoints run the middleware stack from `config('service-health-checking.middleware')`,
+which is empty by default — they are polled by monitoring, not a browser, so they carry no
+session and no authorization gate.
+
+To restrict who may poll them, publish the config (see below) and add middleware:
+
+```php
+'middleware' => ['can:poll-health'],
+```
+
 ## Creating health checks
 To create a health check for your service, simply create a class that extends
 `\Cego\ServiceHealthChecking\BaseHealthCheck`. The base method has 2 abstract methods:
